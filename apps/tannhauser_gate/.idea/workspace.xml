@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PropertiesComponent">
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="SbtLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$USER_HOME$/Projects/AGV/cassandra-phantom" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/AGV/cassandra-phantom-demo" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/AGV/lagom-scala-sbt" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/AgenciaVirtual/agv-back/agv-crm" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/Scala/LightbendAcademy/LAS-P-lightbend-akka-for-scala-professional-v1" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/Scala/LightbendAcademy/LSL-P-lightbend-scala-language-professional/exercises" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/Scala/LightbendAcademy/LTM-Installation-v1/exercises" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/Scala/LightbendAcademy/LTS-P-lightbend-akka-streams-for-scala-professional-v1/exercises/exercises" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/Scala/Scala3/test-scal" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+</project>

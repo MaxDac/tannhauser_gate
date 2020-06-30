@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/apps/tannhauser_gate/tannhauser_gate.iml" filepath="$PROJECT_DIR$/apps/tannhauser_gate/tannhauser_gate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tannhauser_gate_umbrella.iml" filepath="$PROJECT_DIR$/tannhauser_gate_umbrella.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apps/tannhauser_gate_web/tannhauser_gate_web.iml" filepath="$PROJECT_DIR$/apps/tannhauser_gate_web/tannhauser_gate_web.iml" />
+    </modules>
+  </component>
+</project>
