@@ -1,26 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c15e4ed8-20a5-434a-93ad-fcf07c326120" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tannhauser_gate_web/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tannhauser_gate_web/tannhauser_gate_web.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mix.exs" beforeDir="false" afterPath="$PROJECT_DIR$/../../mix.exs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mix.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../mix.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1e3HUZkVgPaKWOsucIhK0hu7hWc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="SbtLocalSettings">
-    <option name="projectSyncType">
-      <map>
-        <entry key="$USER_HOME$/Projects/AGV/cassandra-phantom" value="PREVIEW" />
-        <entry key="$USER_HOME$/Projects/AGV/cassandra-phantom-demo" value="PREVIEW" />
-        <entry key="$USER_HOME$/Projects/AGV/lagom-scala-sbt" value="PREVIEW" />
-        <entry key="$USER_HOME$/Projects/AgenciaVirtual/agv-back/agv-crm" value="PREVIEW" />
-        <entry key="$USER_HOME$/Projects/Scala/LightbendAcademy/LAS-P-lightbend-akka-for-scala-professional-v1" value="PREVIEW" />
-        <entry key="$USER_HOME$/Projects/Scala/LightbendAcademy/LSL-P-lightbend-scala-language-professional/exercises" value="PREVIEW" />
-        <entry key="$USER_HOME$/Projects/Scala/LightbendAcademy/LTM-Installation-v1/exercises" value="PREVIEW" />
-        <entry key="$USER_HOME$/Projects/Scala/LightbendAcademy/LTS-P-lightbend-akka-streams-for-scala-professional-v1/exercises/exercises" value="PREVIEW" />
-        <entry key="$USER_HOME$/Projects/Scala/Scala3/test-scal" value="PREVIEW" />
-      </map>
-    </option>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c15e4ed8-20a5-434a-93ad-fcf07c326120" name="Default Changelist" comment="" />
+      <created>1593543372999</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1593543372999</updated>
+      <workItem from="1593543374360" duration="39000" />
+      <workItem from="1593543428747" duration="980000" />
+      <workItem from="1593551821721" duration="54000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="208" y="43" key="#Project_Structure" timestamp="1593544868821">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="208" y="43" key="#Project_Structure/0.23.1440.877@0.23.1440.877" timestamp="1593544868821" />
+    <state x="421" y="216" width="598" height="490" key="find.popup" timestamp="1593544341929">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="421" y="216" width="598" height="490" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1593544341929" />
   </component>
 </project>
