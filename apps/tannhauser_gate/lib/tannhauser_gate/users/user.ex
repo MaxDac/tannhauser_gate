@@ -15,8 +15,9 @@ defmodule TannhauserGate.Users.User do
     case changeset do
       %Ecto.Changeset {
         valid?: true,
-        changes: %{password: pass}
-      } -> put_change(changeset, :password_hash, Pbkdf2.hash_pwd_salt(pass))
+        changes: %{form_password: pass}
+      } -> put_change(changeset, :password, Pbkdf2.hash_pwd_salt(pass))
+      _ -> changeset
     end
   end
 

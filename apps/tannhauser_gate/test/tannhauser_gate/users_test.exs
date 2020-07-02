@@ -6,9 +6,9 @@ defmodule TannhauserGate.UsersTest do
   describe "users" do
     alias TannhauserGate.Users.User
 
-    @valid_attrs %{email: "some email", password: "some password", username: "some username"}
-    @update_attrs %{email: "some updated email", password: "some updated password", username: "some updated username"}
-    @invalid_attrs %{email: nil, password: nil, username: nil}
+    @valid_attrs %{email: "some email", form_password: "some password", username: "some username"}
+    @update_attrs %{email: "some updated email", form_password: "some updated password", username: "some updated username"}
+    @invalid_attrs %{email: nil, form_password: nil, username: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -21,18 +21,20 @@ defmodule TannhauserGate.UsersTest do
 
     test "list_users/0 returns all users" do
       user = user_fixture()
+      user = %{ user | :form_password => nil }
       assert Users.list_users() == [user]
     end
 
     test "get_user!/1 returns the user with given id" do
       user = user_fixture()
+      user = %{ user | :form_password => nil }
       assert Users.get_user!(user.id) == user
     end
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Users.create_user(@valid_attrs)
       assert user.email == "some email"
-      assert user.password == "some password"
+      # assert user.password == "some password"
       assert user.username == "some username"
     end
 
@@ -44,14 +46,17 @@ defmodule TannhauserGate.UsersTest do
       user = user_fixture()
       assert {:ok, %User{} = user} = Users.update_user(user, @update_attrs)
       assert user.email == "some updated email"
-      assert user.password == "some updated password"
+      # assert user.password == "some updated password"
       assert user.username == "some updated username"
     end
 
     test "update_user/2 with invalid data returns error changeset" do
       user = user_fixture()
       assert {:error, %Ecto.Changeset{}} = Users.update_user(user, @invalid_attrs)
-      assert user == Users.get_user!(user.id)
+      test_user = Users.get_user!(user.id)
+      assert user.id == test_user.id
+      assert user.username == test_user.username
+      assert user.email == test_user.email
     end
 
     test "delete_user/1 deletes the user" do
