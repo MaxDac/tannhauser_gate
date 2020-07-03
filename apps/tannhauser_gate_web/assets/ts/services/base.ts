@@ -8,6 +8,7 @@ export function post<T>(url: string, body: any): Promise<T> {
     return fetch(completeUrl, {
         method: "POST",
         credentials: "include",
+        headers: new Headers({'content-type': 'application/json'}),
         body: JSON.stringify(body)
     })
     .then(res => res.json())

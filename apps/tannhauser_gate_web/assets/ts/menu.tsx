@@ -18,7 +18,7 @@ export default function Menu() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#/characters">Personaggi</Nav.Link>
+                    <Nav.Link href="#/characters">Characters</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link href="#/login">Login</Nav.Link>
