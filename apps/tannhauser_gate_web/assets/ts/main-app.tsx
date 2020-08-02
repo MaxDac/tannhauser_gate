@@ -7,6 +7,7 @@ import Home from "./home";
 import CharactersList from "./characters/characters-list";
 import Login from "./users/login";
 import Registration from "./users/registration";
+import ChatRoom from "./chat/chat-room";
 
 export default function MainApp() {
     return(
@@ -16,6 +17,7 @@ export default function MainApp() {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/registration" component={Registration} />
                 <Route exact path="/characters" component={CharactersList} />
+                <Route exact path="/chat/:id" component={ChatRoom} />
             </Switch>
         </HashRouter>
     )

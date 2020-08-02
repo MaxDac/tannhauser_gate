@@ -37,6 +37,23 @@ defmodule TannhauserGate.Users do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  defp user_by_name_query(name) do
+    from u in User,
+    where: u.username == ^name
+  end
+
+  @spec get_user_by_name(String.t()) :: User
+  def get_user_by_name(name) do
+    Repo.one(user_by_name_query name)
+  end
+
+  @spec exist_user_with_name(any) :: boolean
+  def exist_user_with_name(name) do
+    name
+    |> user_by_name_query
+    |> Repo.exists?
+  end
+
   @doc """
   Creates a user.
 
@@ -71,7 +88,7 @@ defmodule TannhauserGate.Users do
     user
     |> User.registration_changeset(attrs)
     |> Repo.update()
-    
+
   end
 
   @doc """
@@ -102,4 +119,21 @@ defmodule TannhauserGate.Users do
   def change_user(%User{} = user) do
     User.registration_changeset(user, %{})
   end
+
+  def authenticate(username, password) do
+    user = get_user_by_name username
+
+    cond do
+      user && Pbkdf2.verify_pass(password, user.password) ->
+        {:ok, user}
+
+      user ->
+        {:error, :unauthorized}
+
+      true ->
+        Pbkdf2.no_user_verify()
+        {:error, :not_found}
+    end
+  end
+
 end

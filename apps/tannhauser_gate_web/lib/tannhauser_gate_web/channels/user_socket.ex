@@ -3,6 +3,7 @@ defmodule TannhauserGateWeb.UserSocket do
 
   ## Channels
   # channel "room:*", TannhauserGateWeb.RoomChannel
+  channel "chats:*", TannhauserGateWeb.ChatChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

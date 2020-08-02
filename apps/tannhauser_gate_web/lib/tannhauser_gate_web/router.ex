@@ -9,8 +9,13 @@ defmodule TannhauserGateWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :whitelisted_api do
+    plug :accepts, ["json"]
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
+    plug TannhauserGateWeb.AuthorizationPlug
   end
 
   scope "/", TannhauserGateWeb do
@@ -20,6 +25,13 @@ defmodule TannhauserGateWeb.Router do
   end
 
   # Other scopes may use custom stacks.
+  scope "/api", TannhauserGateWeb do
+    pipe_through :whitelisted_api
+
+    post "/login", AuthenticationController, :authenticate
+    post "/verify", AuthenticationController, :verify_token
+  end
+
   scope "/api", TannhauserGateWeb do
     pipe_through :api
 

@@ -4,9 +4,13 @@ defmodule TannhauserGateWeb.UserController do
   alias TannhauserGate.Users
   alias TannhauserGate.Users.User
 
+  import Plug.Conn
+
   action_fallback TannhauserGateWeb.FallbackController
 
+  @spec index(Plug.Conn.t(), any) :: Plug.Conn.t()
   def index(conn, _params) do
+    IO.puts "Current user: #{conn.assigns.username}"
     users = Users.list_users()
     render(conn, "index.json", users: users)
   end
