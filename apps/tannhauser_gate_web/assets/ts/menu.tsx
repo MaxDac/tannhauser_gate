@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import {store} from "./state";
 
 export interface MenuProps {
     logged: boolean
@@ -16,7 +17,7 @@ export default function Menu(props: MenuProps) {
 
     const loggedRightMenu = () =>
         <Nav>
-            <Nav.Link href="javascript:void(0);">Welcome</Nav.Link>
+            <Nav.Item>Welcome {store.getState().state?.user?.username ?? ""}</Nav.Item>
             <Nav.Link href="#/logout">Logout</Nav.Link>
         </Nav>
 
@@ -36,6 +37,7 @@ export default function Menu(props: MenuProps) {
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
+                <Nav.Link href="#/users">List</Nav.Link>
                 <NavDropdown title="Character" id="basic-nav-dropdown" className="mr-auto">
                     <NavDropdown.Item href="#/characters">List</NavDropdown.Item>
                     <NavDropdown.Item href="#/character/new">New</NavDropdown.Item>

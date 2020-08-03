@@ -4,7 +4,7 @@ defmodule TannhauserGate.Repo.Migrations.CreateCharacters do
   def change do
     create table(:characters) do
       add :name, :string
-      add :avatar, :string
+      add :avatar, :text
       add :description, :string
       add :notes, :string
       add :user_id, references(:users, on_delete: :nothing)

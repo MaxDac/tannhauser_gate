@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import {useHistory} from "react-router";
-import {login} from "../services/users-services";
-import {clearState, loadUser, store} from "../state";
+import {login} from "../../services/users-services";
+import {clearState, loadUser, store} from "../../state";
 import LoadingButton from "../base/loading-button";
 
 import "./users.css";
-import {checkResponse, ErrorResponse, getError} from "../dtos/ErrorResponse";
+import {checkResponse, ErrorResponse, getError} from "../../services/error-response";
 import OkModal from "../modals/ok-modal";
-import User from "../dtos/users/user";
+import User from "../../dtos/users/user";
 
 export interface LoginProps {
     onLogged: (u: User) => void;
@@ -53,7 +53,6 @@ export default function Login(props: LoginProps) {
         })
             .then(response => {
                 setIsWaiting(false)
-                console.log("Login response", response)
                 if (checkResponse(response)) {
                     history.push("/")
                     props.onLogged(response as User)

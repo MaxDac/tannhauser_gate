@@ -1,10 +1,23 @@
+import {checkResponse, ErrorResponse} from "./error-response";
+
 export function buildUrl(url: string): string {
     return `${window.location.origin}/${url}`;
 }
 
-export function post<T>(url: string, body: any): Promise<T> {
+export function get<T>(url: string): Promise<T | ErrorResponse> {
     const completeUrl = buildUrl(url);
-    console.log(`calling ${completeUrl}`);
+
+    return fetch(completeUrl, {
+        method: "GET",
+        credentials: "include"
+    })
+    .then(res => res.json())
+    .then(js => js as T)
+}
+
+export function post<T>(url: string, body: any): Promise<T | ErrorResponse> {
+    const completeUrl = buildUrl(url);
+
     return fetch(completeUrl, {
         method: "POST",
         credentials: "include",

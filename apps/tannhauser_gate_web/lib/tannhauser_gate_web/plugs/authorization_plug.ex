@@ -17,13 +17,19 @@ defmodule TannhauserGateWeb.AuthorizationPlug do
   end
 
   @spec check_cookie(Plug.Conn.t(), String.t()) :: Plug.Conn.t()
+  defp check_cookie(conn, ""), do:
+    conn
+    |> put_error_response("User not logged")
+
   defp check_cookie(conn, cookie) do
-    IO.puts "cookie: #{inspect cookie}"
     case validate_jwt_token(cookie) do
       {:ok, username} ->
-        conn |> assign(:username, username)
+        conn
+        |> assign(:username, username)
       {:error, reason} ->
-        conn |> put_error_response(inspect reason)
+        IO.inspect reason
+        conn
+        |> put_error_response("User unauthorized")
     end
   end
 

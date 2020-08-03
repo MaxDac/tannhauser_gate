@@ -11,6 +11,11 @@ defmodule TannhauserGateWeb.CharacterController do
     render(conn, "index.json", characters: characters)
   end
 
+  def index_by_user(conn, %{"user_id" => user_id}) do
+    characters = Characters.list_characters_by_user(user_id)
+    render(conn, "index.json", characters: characters)
+  end
+
   def create(conn, %{"character" => character_params}) do
     with {:ok, %Character{} = character} <- Characters.create_character(character_params) do
       conn

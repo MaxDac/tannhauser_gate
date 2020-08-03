@@ -8,6 +8,13 @@ defmodule TannhauserGate.Characters do
 
   alias TannhauserGate.Characters.Character
 
+  def list_characters_query, do:
+    from c in Character, select: %Character{
+      id: c.id,
+      user_id: c.user_id,
+      name: c.name
+    }
+
   @doc """
   Returns the list of characters.
 
@@ -18,7 +25,11 @@ defmodule TannhauserGate.Characters do
 
   """
   def list_characters do
-    Repo.all(Character)
+    Repo.all(list_characters_query)
+  end
+
+  def list_characters_by_user(user_id) do
+    Repo.all(from c in list_characters_query, where: c.user_id == ^user_id)
   end
 
   @doc """
@@ -35,7 +46,11 @@ defmodule TannhauserGate.Characters do
       ** (Ecto.NoResultsError)
 
   """
-  def get_character!(id), do: Repo.get!(Character, id)
+  def get_character!(id) do
+    result = Repo.get!(Character, id) |> Repo.preload(:user)
+    IO.inspect %{result | avatar: ""}
+    result
+  end
 
   @doc """
   Creates a character.
@@ -69,7 +84,7 @@ defmodule TannhauserGate.Characters do
   """
   def update_character(%Character{} = character, attrs) do
     character
-    |> Character.changeset(attrs)
+    |> Character.update_changeset(attrs)
     |> Repo.update()
   end
 

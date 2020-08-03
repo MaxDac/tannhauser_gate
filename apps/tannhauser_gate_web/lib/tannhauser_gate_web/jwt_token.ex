@@ -12,14 +12,8 @@ defmodule TannhauserGateWeb.JwtToken do
     }
 
     case generate_and_sign(extra_claims, @signer) do
-      {:ok, token, claims} ->
-        IO.puts "Token generated: #{inspect token}"
-        IO.puts "Second response: #{inspect claims}"
-        {:ok, token
-      }
-      {:error, reason} = r ->
-        IO.puts("Error while generating token: #{inspect reason}")
-        r
+      {:ok, token, _claims} -> {:ok, token }
+      r -> r
     end
   end
 

@@ -15,7 +15,6 @@ defmodule TannhauserGateWeb.ErrorView do
   end
 
   def render("error.json", %{error: error}) do
-    IO.puts "Rendering error: #{error}"
     %{
       errors: [error]
     }

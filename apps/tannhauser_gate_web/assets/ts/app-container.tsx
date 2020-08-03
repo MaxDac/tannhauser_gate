@@ -3,18 +3,18 @@ import Menu from "./menu";
 import {clearState, loadUser, store} from "./state";
 import {HashRouter, Route, Switch, useHistory} from "react-router-dom";
 import Home from "./home";
-import Login from "./users/login";
-import Registration from "./users/registration";
-import CharactersList from "./characters/characters-list";
-import CharacterCreation from "./characters/character-creation";
-import ChatRoom from "./chat/chat-room";
+import Login from "./components/users/login";
+import Registration from "./components/users/registration";
+import CharactersList from "./components/characters/characters-list";
+import CharacterCreation from "./components/characters/character-creation";
+import ChatRoom from "./components/chat/chat-room";
 import User from "./dtos/users/user";
-import Logout from "./users/logout";
+import Logout from "./components/users/logout";
+import Users from "./components/users/users";
+import {clearCookies} from "./helpers";
 
 export default function AppContainer() {
     const [logged, setLogged] = useState(false)
-
-    const history = useHistory()
 
     useEffect(() => {
         const state = store.getState()
@@ -31,6 +31,7 @@ export default function AppContainer() {
 
     const onLogout = () => {
         clearState(store)
+        clearCookies()
         setLogged(false)
     }
 
@@ -43,6 +44,7 @@ export default function AppContainer() {
                     <Route exact path="/login" component={() => <Login onLogged={onLogged} />} />
                     <Route exact path="/logout" component={() => <Logout onLogout={onLogout} />} />
                     <Route exact path="/registration" component={Registration} />
+                    <Route exact path="/users" component={Users} />
                     <Route exact path="/characters" component={CharactersList} />
                     <Route exact path="/character/new" component={CharacterCreation} />
                     <Route exact path="/chat/:id" component={ChatRoom} />

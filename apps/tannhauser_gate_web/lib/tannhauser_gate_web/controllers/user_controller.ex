@@ -10,17 +10,23 @@ defmodule TannhauserGateWeb.UserController do
 
   @spec index(Plug.Conn.t(), any) :: Plug.Conn.t()
   def index(conn, _params) do
-    IO.puts "Current user: #{conn.assigns.username}"
     users = Users.list_users()
     render(conn, "index.json", users: users)
   end
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Users.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+    case Users.create_user(user_params) do
+      {:ok, %User{} = user} ->
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", Routes.user_path(conn, :show, user))
+        |> render("show.json", user: user)
+      {:error, reason} ->
+        IO.puts "Error while registering user #{inspect reason}"
+
+        conn
+        |> put_view(ErrorView)
+        |> render("error.json", error: reason)
     end
   end
 

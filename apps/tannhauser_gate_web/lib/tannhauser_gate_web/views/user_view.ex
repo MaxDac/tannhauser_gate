@@ -19,4 +19,8 @@ defmodule TannhauserGateWeb.UserView do
   def render("token.json", %{token: token}) do
     %{token: token}
   end
+
+  def render("logout.json", %{}) do
+    %{}
+  end
 end
