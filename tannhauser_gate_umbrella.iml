@@ -18,6 +18,8 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/file_system" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gettext" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/jason" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/joken" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/jose" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mime" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/pbkdf2_elixir" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix" />

@@ -3,7 +3,7 @@ defmodule TannhauserGateWeb.AuthenticationController do
 
   alias TannhauserGate.Users
   alias TannhauserGateWeb.ErrorView
-  alias TannhauserGateWeb.GenericView
+  alias TannhauserGateWeb.UserView
   alias TannhauserGateWeb.JwtToken
 
   import Plug.Conn
@@ -21,16 +21,15 @@ defmodule TannhauserGateWeb.AuthenticationController do
         conn
         |> put_view(ErrorView)
         |> render("error.json", error: "User unauthorized")
+
       {:ok, user} ->
 #        render(conn, "show.json", user: user)
-        IO.puts("The username: #{user.username}")
         {:ok, token} = JwtToken.get_jwt_token(user.username)
-        IO.puts("The token is: #{token}")
 
         conn
         |> put_resp_cookie(@session_cookie_key, token)
-        |> put_view(GenericView)
-        |> render("code.json", code: token)
+        |> put_view(UserView)
+        |> render("show.json", user: user)
     end
   end
 

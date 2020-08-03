@@ -54,6 +54,12 @@ defmodule TannhauserGate.Users do
     |> Repo.exists?
   end
 
+  @spec get_user_by_email(String.t()) :: User
+  def get_user_by_email(email) do
+    query = from u in User, where: u.email == ^email
+    Repo.one(query)
+  end
+
   @doc """
   Creates a user.
 
@@ -120,8 +126,8 @@ defmodule TannhauserGate.Users do
     User.registration_changeset(user, %{})
   end
 
-  def authenticate(username, password) do
-    user = get_user_by_name username
+  def authenticate(email, password) do
+    user = get_user_by_email email
 
     cond do
       user && Pbkdf2.verify_pass(password, user.password) ->
