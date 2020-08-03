@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import {registerUser} from "../../services/users-services";
+import {UsersServices} from "../../services/users-services";
 import {useHistory} from "react-router-dom";
-import OkModal from "../modals/ok-modal";
+import OkModal from "../base/ok-modal";
+import {checkResponse} from "../../services/error-response";
+import User from "../../dtos/users/user";
 
 export default function Registration() {
     const [email, setEmail] = useState("");
@@ -30,17 +32,17 @@ export default function Registration() {
     }
 
     const onFormSubmit = (e: any) => {
-        registerUser({
+        UsersServices.registerUser({
             email,
             username,
             form_password: password
         })
             .then(user => {
-                if (user === undefined || user.id === undefined) {
-                    setModalText("Error while creating the character. Please contact support.");
+                if (checkResponse(user) && (user as User).id !== undefined) {
+                    setModalText("Character created, you will be redirected.");
                 }
                 else {
-                    setModalText("Character created, you will be redirected.");
+                    setModalText("Error while creating the character. Please contact support.");
                 }
 
                 setShowModal(true)

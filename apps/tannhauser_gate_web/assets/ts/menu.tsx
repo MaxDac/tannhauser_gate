@@ -37,11 +37,14 @@ export default function Menu(props: MenuProps) {
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav.Link href="#/users">List</Nav.Link>
-                <NavDropdown title="Character" id="basic-nav-dropdown" className="mr-auto">
-                    <NavDropdown.Item href="#/characters">List</NavDropdown.Item>
-                    <NavDropdown.Item href="#/character/new">New</NavDropdown.Item>
-                </NavDropdown>
+                <Nav className="mr-auto">
+                    <Nav.Link href="#/users">List</Nav.Link>
+                    <NavDropdown title="Character" id="basic-nav-dropdown">
+                        <NavDropdown.Item href="#/characters">List</NavDropdown.Item>
+                        <NavDropdown.Item href="#/character/new">New</NavDropdown.Item>
+                    </NavDropdown>
+                    <Nav.Link href="#/chats">Map</Nav.Link>
+                </Nav>
                 {rightMenu()}
             </Navbar.Collapse>
         </Navbar>

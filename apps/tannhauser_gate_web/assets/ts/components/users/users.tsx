@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getUsers} from "../../services/users-services";
+import {UsersServices} from "../../services/users-services";
 import {checkResponse} from "../../services/error-response";
 import User from "../../dtos/users/user";
 
@@ -7,7 +7,7 @@ export default function Users() {
     const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
-        getUsers()
+        UsersServices.getUsers()
             .then(res => {
                 if (checkResponse(res)) {
                     setUsers(res as User[])

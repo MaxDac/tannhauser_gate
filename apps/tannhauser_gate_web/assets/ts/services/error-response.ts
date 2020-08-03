@@ -21,3 +21,7 @@ export function getError(response: any): ErrorResponse {
 
     return response as ErrorResponse
 }
+
+export function formatError(e: ErrorResponse, title: string): string {
+    return `${title}:\r\n${e.errors.join("\r\n")}`
+}

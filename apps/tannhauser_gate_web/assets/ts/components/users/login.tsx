@@ -1,16 +1,17 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Form from "react-bootstrap/Form";
 import {useHistory} from "react-router";
-import {login} from "../../services/users-services";
 import {clearState, loadUser, store} from "../../state";
 import LoadingButton from "../base/loading-button";
 
 import "./users.css";
 import {checkResponse, ErrorResponse, getError} from "../../services/error-response";
-import OkModal from "../modals/ok-modal";
+import OkModal from "../base/ok-modal";
 import User from "../../dtos/users/user";
+import {AuthenticationServices} from "../../services/authentication-services";
 
 export interface LoginProps {
+    isUnauthorized?: boolean;
     onLogged: (u: User) => void;
 }
 
@@ -23,11 +24,17 @@ export default function Login(props: LoginProps) {
 
     const history = useHistory()
 
+    useEffect(() => {
+        if (props.isUnauthorized) {
+            setErrorMessage("Login expired, please log on again.")
+            setShowModal(true)
+        }
+    }, [])
+
     const buildErrorMessage = (e: ErrorResponse) => {
         if (e.errors.length === 1) {
-            return e.errors[0];
+            return e.errors[0]
         }
-
         else {
             let message = "There were errors while performing login"
 
@@ -47,7 +54,7 @@ export default function Login(props: LoginProps) {
         e.preventDefault()
         setIsWaiting(true)
 
-        login({
+        AuthenticationServices.login({
             username: email,
             password: password
         })

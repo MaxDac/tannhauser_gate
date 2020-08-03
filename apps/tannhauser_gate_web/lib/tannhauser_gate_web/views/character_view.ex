@@ -3,11 +3,11 @@ defmodule TannhauserGateWeb.CharacterView do
   alias TannhauserGateWeb.CharacterView
 
   def render("index.json", %{characters: characters}) do
-    %{data: render_many(characters, CharacterView, "character-short.json")}
+    render_many(characters, CharacterView, "character-short.json")
   end
 
   def render("show.json", %{character: character}) do
-    %{data: render_one(character, CharacterView, "character.json")}
+    render_one(character, CharacterView, "character.json")
   end
 
   def render("character-short.json", %{character: character}) do

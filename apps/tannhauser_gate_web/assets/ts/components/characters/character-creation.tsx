@@ -3,9 +3,9 @@ import "../../../css/main-app.css"
 import Form from 'react-bootstrap/Form'
 import FileDrop from "../base/file-drop";
 import LoadingButton from "../base/loading-button";
-import {createCharacter} from "../../services/characters-services";
 import {store} from "../../state";
 import {checkResponse, ErrorResponse} from "../../services/error-response";
+import {CharactersServices} from "../../services/characters-services"
 
 export default function CharacterCreation() {
     const [name, setName] = useState("")
@@ -33,7 +33,7 @@ export default function CharacterCreation() {
         e.preventDefault()
         setIsWaiting(true)
 
-        createCharacter({
+        CharactersServices.createCharacter({
             user_id: store.getState().state?.user.id as string,
             name: name,
             description: description,
