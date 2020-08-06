@@ -66,3 +66,18 @@ export function arrayBufferToBase64(ab: ArrayBuffer): string {
 
     return window.btoa(stringChar)
 }
+
+export function reloadFromServer(path: string) {
+    window.location.href = path
+    window.location.reload()
+}
+
+export function getUserToken(): string {
+    const token = (window as any)?.userToken
+
+    if (token !== undefined) {
+        return token
+    }
+
+    return ""
+}

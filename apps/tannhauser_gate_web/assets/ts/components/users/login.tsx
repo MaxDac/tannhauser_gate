@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import Form from "react-bootstrap/Form";
-import {useHistory} from "react-router";
-import {clearState, loadUser, store} from "../../state";
+import {clearState, store} from "../../state";
 import LoadingButton from "../base/loading-button";
-
-import "./users.css";
 import {checkResponse, ErrorResponse, getError} from "../../services/error-response";
 import OkModal from "../base/ok-modal";
 import User from "../../dtos/users/user";
 import {AuthenticationServices} from "../../services/authentication-services";
+
+import "./users.css";
+import {reloadFromServer} from "../../helpers";
 
 export interface LoginProps {
     isUnauthorized?: boolean;
@@ -21,8 +21,6 @@ export default function Login(props: LoginProps) {
     const [isWaiting, setIsWaiting] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const [showModal, setShowModal] = useState(false)
-
-    const history = useHistory()
 
     useEffect(() => {
         if (props.isUnauthorized) {
@@ -61,8 +59,9 @@ export default function Login(props: LoginProps) {
             .then(response => {
                 setIsWaiting(false)
                 if (checkResponse(response)) {
-                    history.push("/")
+                    // history.push("/")
                     props.onLogged(response as User)
+                    reloadFromServer("#/")
                 }
                 else {
                     clearState(store)

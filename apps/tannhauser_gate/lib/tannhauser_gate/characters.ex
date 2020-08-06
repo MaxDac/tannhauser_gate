@@ -29,7 +29,9 @@ defmodule TannhauserGate.Characters do
   end
 
   def list_characters_by_user(user_id) do
-    Repo.all(from c in list_characters_query, where: c.user_id == ^user_id)
+    result = Repo.all(from c in list_characters_query, where: c.user_id == ^user_id)
+    IO.inspect result
+    result
   end
 
   @doc """

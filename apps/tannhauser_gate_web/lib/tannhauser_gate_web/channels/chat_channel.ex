@@ -1,15 +1,42 @@
 defmodule TannhauserGateWeb.ChatChannel do
   use TannhauserGateWeb, :channel
 
-  def join("chats:" <> chat_id, _params, socket) do
-    :timer.send_interval(5_000, :ping)
-    {:ok, assign(socket, :chat_id, String.to_integer(chat_id))}
+  alias TannhauserGate.Chats
+  alias TannhauserGate.Chats.Chat
+
+  @spec map_chat(Chat.t()) :: %{}
+  defp map_chat(c), do:
+    %{ "id" => c.id, "text" => c.text, "date" => c.inserted_at, "character_name" => c.character }
+
+  def join("chats:" <> chat_room_id, _params, socket) do
+    IO.puts "Joining"
+
+    chats =
+      Chats.get_last_chats_by_room(chat_room_id)
+      |> Enum.map(fn c ->
+        %{ "id" => c.id, "text" => c.text, "date" => c.inserted_at, "character_name" => c.character } end)
+
+    {:ok, %{"chats" => chats}, assign(socket, :chat_id, String.to_integer(chat_room_id))}
   end
 
-  @spec handle_info(:ping, Phoenix.Socket.t()) :: {:noreply, Phoenix.Socket.t()}
-  def handle_info(:ping, socket) do
-    count = socket.assigns[:count] || 1
-    push(socket, "ping", %{count: count})
-    {:noreply, assign(socket, :count, count + 1)}
+  def handle_in("new_chat_log_insert", attrs, socket) do
+    IO.puts "Handling"
+
+    # Inserting chat
+    user_id = socket.assigns[:user_id]
+    chat_log =
+      attrs
+      |> Map.put("user_id", user_id)
+      |> Chats.create_chat_with_user_id()
+
+    broadcast!(socket, "new_chat_log",
+      %{
+        "id" => chat_log.id,
+        "text" => chat_log.text,
+        "date" => chat_log.inserted_at,
+        "character_name" => chat_log.character.name
+      })
+
+    {:reply, :ok, socket}
   end
 end

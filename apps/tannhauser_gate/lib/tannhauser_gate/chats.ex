@@ -4,9 +4,12 @@ defmodule TannhauserGate.Chats do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.DateTime
   alias TannhauserGate.Repo
 
   alias TannhauserGate.Chats.Chat
+  alias TannhauserGate.Characters
+  alias TannhauserGate.Characters.Character
 
   @doc """
   Returns the list of chat.
@@ -35,7 +38,24 @@ defmodule TannhauserGate.Chats do
       ** (Ecto.NoResultsError)
 
   """
-  def get_chat!(id), do: Repo.get!(Chat, id)
+  def get_chat!(id), do: Repo.get!(Chat, id) |> Repo.preload(:character)
+
+  defp nested_character_query(), do:
+    from c in Character, select: c.name
+
+  def get_chat_by_room(room_id), do:
+    Repo.all(from c in Chat, where: c.chat_rooms_id == ^room_id)
+    |> Enum.map(fn c -> c |> Repo.preload([character: nested_character_query()]) end)
+
+  def get_last_chats_by_room(room_id) do
+    with query <-
+      from c in Chat,
+           where: c.chat_rooms_id == ^room_id,
+           where: c.inserted_at > datetime_add(^NaiveDateTime.utc_now(), -2, "hour") do
+      Repo.all(query)
+      |> Repo.preload([character: nested_character_query()])
+    end
+  end
 
   @doc """
   Creates a chat.
@@ -55,38 +75,10 @@ defmodule TannhauserGate.Chats do
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a chat.
-
-  ## Examples
-
-      iex> update_chat(chat, %{field: new_value})
-      {:ok, %Chat{}}
-
-      iex> update_chat(chat, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_chat(%Chat{} = chat, attrs) do
-    chat
-    |> Chat.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a chat.
-
-  ## Examples
-
-      iex> delete_chat(chat)
-      {:ok, %Chat{}}
-
-      iex> delete_chat(chat)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_chat(%Chat{} = chat) do
-    Repo.delete(chat)
+  def create_chat_with_user_id(%{"user_id" => user_id} = attrs) do
+    [character | _] = Characters.list_characters_by_user(user_id)
+    {:ok, %Chat{id: id}} = create_chat(attrs |> Map.put("character_id", character.id))
+    get_chat!(id)
   end
 
   @doc """

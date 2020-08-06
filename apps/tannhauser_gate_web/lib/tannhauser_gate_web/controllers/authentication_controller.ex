@@ -22,7 +22,7 @@ defmodule TannhauserGateWeb.AuthenticationController do
         |> render("error.json", error: "User unauthorized")
 
       {:ok, user} ->
-        {:ok, token} = JwtToken.get_jwt_token(user.username)
+        {:ok, token} = JwtToken.get_jwt_token(user.id)
 
         conn
         |> put_resp_cookie(@session_cookie_key, token)

@@ -7,10 +7,12 @@ defmodule TannhauserGateWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug TannhauserGateWeb.TokenPlug
   end
 
   pipeline :whitelisted_api do
     plug :accepts, ["json"]
+    plug TannhauserGateWeb.TokenPlug
   end
 
   pipeline :api do
@@ -40,5 +42,8 @@ defmodule TannhauserGateWeb.Router do
     resources "/users", UserController, except: [:create]
     resources "/characters", CharacterController
     get "/characters/list/:user_id", CharacterController, :index_by_user
+    get "/rooms", ChatController, :get_chat_rooms
+    get "/rooms/:id", ChatController, :get_chat_room
+    get "/chat/logs/:room_id", ChatController, :get_chat_logs_by_room
   end
 end

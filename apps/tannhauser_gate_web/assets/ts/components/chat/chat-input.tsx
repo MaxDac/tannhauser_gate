@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 
 export interface ChatInputProps {
     onSubmit: (text: string) => void;
+    className?: string;
 }
 
 export default function ChatInput(props: ChatInputProps) {
@@ -20,7 +21,7 @@ export default function ChatInput(props: ChatInputProps) {
     }
 
     return (
-        <Form onSubmit={onSubmit}>
+        <Form className={props.className} onSubmit={onSubmit}>
             <Form.Group controlId="chat-input">
                 <Form.Label>Phrase</Form.Label>
                 <Form.Control type="text" 

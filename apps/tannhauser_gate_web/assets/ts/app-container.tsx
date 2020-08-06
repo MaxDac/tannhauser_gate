@@ -6,7 +6,7 @@ import Home from "./home";
 import Login from "./components/users/login";
 import Registration from "./components/users/registration";
 import CharacterCreation from "./components/characters/character-creation";
-import ChatRoom from "./components/chat/chat-room";
+import ChatRoomComponent from "./components/chat/chat-room-component";
 import User from "./dtos/users/user";
 import Logout from "./components/users/logout";
 import Users from "./components/users/users";
@@ -50,10 +50,10 @@ export default function AppContainer() {
                     <Route exact path="/registration" component={Registration} />
                     <Route exact path="/users" component={Users} />
                     <Route exact path="/characters" component={CharacterList} />
-                    <Route exact path="/character/:id" component={CharacterSheet} />
                     <Route exact path="/character/new" component={CharacterCreation} />
+                    <Route exact path="/character/:id" component={CharacterSheet} />
                     <Route exact path="/chats" component={ChatMap} />
-                    <Route exact path="/chat/:id" component={ChatRoom} />
+                    <Route exact path="/chat/:id" component={ChatRoomComponent} />
                 </Switch>
             </HashRouter>
         </div>

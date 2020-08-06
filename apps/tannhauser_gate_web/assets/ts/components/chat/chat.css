@@ -1,0 +1,54 @@
+.map-container {
+    max-width: 600px;
+    height: auto;
+}
+
+.map-image {
+    width: 100%;
+    height: auto;
+    z-index: 3;
+    opacity: 10%;
+}
+
+.area-style {
+    border: 1px green solid;
+}
+
+.chat-show {
+    overflow: auto;
+    position: absolute;
+    bottom: 170px;
+    top: 120px;
+    width: 80%;
+}
+
+.chat-log {
+    padding: 10px;
+}
+
+.chat-input {
+    position: absolute;
+    bottom: 0;
+    height: 150px;
+    width: 80%;
+    border-top: 2px green;
+}
+
+.selected-map-dot {
+    opacity: 0;
+    z-index: 2;
+    transition: 0.5s;
+}
+
+.selected-map-dot:hover {
+    opacity: 1;
+}
+
+.background-map-dot {
+    opacity: 1;
+    z-index: 1;
+}
+
+.map-html {
+    z-index: 4;
+}

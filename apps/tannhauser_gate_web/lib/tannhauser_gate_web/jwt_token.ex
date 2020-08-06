@@ -5,10 +5,10 @@ defmodule TannhauserGateWeb.JwtToken do
 
   @signer Joken.Signer.create("HS256", "site-secret")
 
-  @spec get_jwt_token(any) :: {:error, atom | keyword} | {:ok, binary}
-  def get_jwt_token(username) do
+  @spec get_jwt_token(String.t()) :: {:error, atom | keyword} | {:ok, binary}
+  def get_jwt_token(id) do
     extra_claims = %{
-      "username" => username
+      "user_id" => id
     }
 
     case generate_and_sign(extra_claims, @signer) do
@@ -20,9 +20,8 @@ defmodule TannhauserGateWeb.JwtToken do
   @spec validate_jwt_token(binary) :: {:error, atom | keyword} | {:ok, any}
   def validate_jwt_token(token) do
     case verify_and_validate(token, @signer) do
-      {:ok, claims} ->
-        %{"username" => username} = claims
-        {:ok, username}
+      {:ok, %{"user_id" => user_id}} ->
+        {:ok, user_id}
       r ->
         r
     end

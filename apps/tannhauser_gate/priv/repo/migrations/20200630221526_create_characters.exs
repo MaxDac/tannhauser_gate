@@ -5,8 +5,8 @@ defmodule TannhauserGate.Repo.Migrations.CreateCharacters do
     create table(:characters) do
       add :name, :string
       add :avatar, :text
-      add :description, :string
-      add :notes, :string
+      add :description, :text
+      add :notes, :text
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
