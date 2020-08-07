@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import Alert from "react-bootstrap/Alert"
-import {Log} from "../../log";
 
 export interface ErrorAlertProps {
     message: string;
@@ -9,7 +8,6 @@ export interface ErrorAlertProps {
 }
 
 export default function ErrorAlert(props: ErrorAlertProps) {
-    const [show, setShow] = useState(props.show)
     let timeoutRef: number = 0;
 
     const onClose = () => {
@@ -17,8 +15,7 @@ export default function ErrorAlert(props: ErrorAlertProps) {
             clearTimeout(timeoutRef)
         }
 
-        setShow(false)
-        props.onClose
+        props.onClose();
     }
 
     useEffect(() => {
@@ -28,8 +25,7 @@ export default function ErrorAlert(props: ErrorAlertProps) {
     }, [])
 
     const showError = () => {
-        Log.info(`is show: ${show}`)
-        if (show) {
+        if (props.show) {
             return (
                 <Alert variant="dark" onClose={onClose} dismissible>
                     <Alert.Heading>Error!</Alert.Heading>

@@ -11,6 +11,7 @@ import {checkResponse} from "../../services/error-response";
 import ChatCharacterSheet from "../characters/chat-character-sheet";
 import Character from "../../dtos/characters/character";
 import {CharactersServices} from "../../services/characters-services";
+import {store} from "../../state";
 
 interface ChannelContainer {
     channel?: Channel;
@@ -61,6 +62,7 @@ export default function ChatRoomComponent() {
     const onNewPhrase = (text: string) => {
         if (chatChannel.channel !== undefined) {
             chatChannel.channel.push("new_chat_log_insert", {
+                character_id: store.getState().state?.character?.id,
                 chat_rooms_id: id,
                 text: text
             })

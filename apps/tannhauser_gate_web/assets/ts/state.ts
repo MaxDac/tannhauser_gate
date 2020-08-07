@@ -116,7 +116,7 @@ export function loadUser(store: Store<StateContainer<UserState>, Action<any>>, u
     store.dispatch(loadUserAction(user))
 }
 
-export function loadCharacter(store: Store<StateContainer<UserState>, Action<any>>, c: Character) {
+export function storeCharacter(store: Store<StateContainer<UserState>, Action<any>>, c: Character) {
     store.dispatch(loadCharacterAction(c))
 }
 

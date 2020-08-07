@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import "../../../css/main-app.css"
 import Form from 'react-bootstrap/Form'
 import FileDrop from "../base/file-drop";
 import LoadingButton from "../base/loading-button";
 import {store} from "../../state";
-import {checkResponse, ErrorResponse} from "../../services/error-response";
-import {CharactersServices} from "../../services/characters-services"
+import {checkResponse, ErrorResponse, formatError} from "../../services/error-response";
+import {CharactersServices} from "../../services/characters-services";
+import {useHistory} from "react-router";
+import ErrorAlert from "../base/error-alert";
+import "../../../css/main-app.css"
+import OkModal from "../base/ok-modal";
 
 export default function CharacterCreation() {
     const [name, setName] = useState("")
@@ -13,6 +16,15 @@ export default function CharacterCreation() {
     const [notes, setNotes] = useState("")
     const [avatar, setAvatar] = useState("")
     const [isWaiting, setIsWaiting] = useState(false)
+
+    const [errorMessage, setErrorMessage] = useState("")
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+    const [showModal, setShowModal] = useState(false);
+
+    const modalText = "Character created, you will now be redirected.";
+
+    const history = useHistory();
 
     const onNameChanged = (e: any) => {
         const value = e.target.value
@@ -29,6 +41,12 @@ export default function CharacterCreation() {
         setNotes(value)
     }
 
+    const showError = (error: string) => {
+        console.error("Shoring error!", error);
+        setErrorMessage(error);
+        setShowErrorMessage(true);
+    }
+
     const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsWaiting(true)
@@ -42,15 +60,34 @@ export default function CharacterCreation() {
         })
             .then(res => {
                 if (!checkResponse(res)) {
-                    alert(`Error! ${JSON.stringify((res as ErrorResponse).errors)}`)
+                    showError(formatError(res as ErrorResponse, "Error while creating character!"));
                 }
 
-                setIsWaiting(false)
+                setIsWaiting(false);
+                setShowModal(true);
             })
+    }
+
+    const onPopupOk = () => {
+        setShowModal(false);
+        history.push("/");
+        document.location.reload();
+    }
+
+    const onErrorClose = () => {
+        console.log("closing...");
+        setShowErrorMessage(false);
     }
 
     return (
         <div className="app-container">
+            <ErrorAlert message={errorMessage}
+                        show={showErrorMessage}
+                        onClose={onErrorClose} />
+            <OkModal text={modalText}
+                     show={showModal}
+                     buttonText="Ok"
+                     onOk={onPopupOk} />
             <Form onSubmit={onFormSubmit}>
                 <Form.Group controlId="name">
                     <Form.Label>Name</Form.Label>
@@ -77,7 +114,10 @@ export default function CharacterCreation() {
                 </Form.Group>
 
                 <div className="avatar-container">
-                    <FileDrop title="Avatar upload" showPreview={true} onLoad={setAvatar} />
+                    <FileDrop title="Avatar upload"
+                              showPreview={true}
+                              onLoad={setAvatar}
+                              onError={showError} />
                 </div>
 
                 <LoadingButton buttonText="Submit" isWaiting={isWaiting} />

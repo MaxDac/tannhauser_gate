@@ -75,6 +75,13 @@ defmodule TannhauserGate.Chats do
     |> Repo.insert()
   end
 
+  def create_chat_with_user_id(%{
+    "user_id" => user_id,
+    "character_id" => character_id} = attrs) when character_id != "" do
+    {:ok, %Chat{id: id}} = create_chat(attrs |> Map.put("character_id", character_id))
+    get_chat!(id)
+  end
+
   def create_chat_with_user_id(%{"user_id" => user_id} = attrs) do
     [character | _] = Characters.list_characters_by_user(user_id)
     {:ok, %Chat{id: id}} = create_chat(attrs |> Map.put("character_id", character.id))

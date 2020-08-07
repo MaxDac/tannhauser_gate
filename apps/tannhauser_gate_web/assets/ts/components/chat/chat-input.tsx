@@ -35,9 +35,8 @@ export default function ChatInput(props: ChatInputProps) {
             <Container>
                 <Row>
                     <Col xs="9" md="10">
-                        <Form.Group controlId="chat-input">
+                        <Form.Group controlId="submit-text">
                             <Form.Control type="text"
-                                          id="submit-text"
                                           onChange={onTextChanged}
                                           className="bg-dark text-white"
                                           placeholder="Enter action text here" />

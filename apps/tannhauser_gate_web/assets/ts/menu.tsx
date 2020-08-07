@@ -1,35 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
-import {store} from "./state";
-import Character from "./dtos/characters/character";
-import {CharactersServices} from "./services/characters-services";
-import {checkResponse, ErrorResponse} from "./services/error-response";
+import CharacterSelection from "./components/characters/character-selection";
+import "../css/main-app.css";
 
 export interface MenuProps {
     logged: boolean
 }
 
 export default function Menu(props: MenuProps) {
-    const [characters, setCharacters] = useState<Character[]>([]);
-
-    useEffect(() => {
-        if (props.logged && store.getState().state?.user !== undefined) {
-            CharactersServices.listCharacters(store.getState().state?.user.id as string)
-                .then(cs => {
-                    if (checkResponse(cs)) {
-                        setCharacters(cs as Character[]);
-                    }
-                    else {
-                        console.error("TODO! manage error.", cs as ErrorResponse);
-
-                    }
-                });
-        }
-    }, []);
-
     const toggleNavbar = () => {
         const el = document.getElementById("navbar-toggle-button");
 
@@ -45,23 +25,15 @@ export default function Menu(props: MenuProps) {
         </Nav>
 
     const loggedRightMenu = () =>
-        <>
-            <Form.Group controlId="characterSelect" onChange={(e: any) => console.log("changed", e)}>
-                <Form.Control as="select" className="bg-dark text-white">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </Form.Control>
-            </Form.Group>
+        <Nav>
+            <CharacterSelection history={(props as any).history} />
             <Nav.Link href="#/logout" onClick={toggleNavbar}>Logout</Nav.Link>
-        </>;
+        </Nav>;
 
     const rightMenu = () => props.logged ? loggedRightMenu() : unloggedRightMenu()
 
     return (
-        <Navbar className="navbar navbar-expand-lg navbar-dark"
+        <Navbar className="navbar navbar-expand-lg navbar-dark menu"
                 bg="dark"
                 variant="dark"
                 expand="lg">
