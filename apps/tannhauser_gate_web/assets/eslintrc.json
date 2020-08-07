@@ -1,4 +1,0 @@
-"parserOptions": {
-  "project": ["src/tsconfig.json", "service-worker/tsconfig.json"],
-  "sourceType": "module"
-},

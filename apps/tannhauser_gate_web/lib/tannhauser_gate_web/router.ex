@@ -24,6 +24,13 @@ defmodule TannhauserGateWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/index.html", PageController, :index
+  end
+
+  scope "/", TannhauserGateWeb do
+    pipe_through :whitelisted_api
+
+    get "/manifest.json", GenericController, :get_manifest
   end
 
   # Other scopes may use custom stacks.
