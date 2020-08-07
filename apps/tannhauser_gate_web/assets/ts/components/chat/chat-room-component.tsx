@@ -8,28 +8,33 @@ import ChatRoom from "../../dtos/chats/chat-room";
 import {ChatServices} from "../../services/chat-services";
 import getRoom = ChatServices.getRoom;
 import {checkResponse} from "../../services/error-response";
+import ChatCharacterSheet from "../characters/chat-character-sheet";
+import Character from "../../dtos/characters/character";
+import {CharactersServices} from "../../services/characters-services";
 
 interface ChannelContainer {
     channel?: Channel;
 }
 
 export default function ChatRoomComponent() {
-    const {id} = useParams()
-    const [room, setRoom] = useState<ChatRoom[]>([])
-    const [chatChannel, setChatChannel] = useState<ChannelContainer>({})
+    const {id} = useParams();
+    const [room, setRoom] = useState<ChatRoom | undefined>();
+    const [chatChannel, setChatChannel] = useState<ChannelContainer>({});
+    const [selectedCharacter, setSelectedCharacter] = useState<Character | undefined>();
+    const [showCharacterModal, setShowCharacterModal] = useState(false);
     
     let socket = new Socket("/socket", {
         params: {token: getUserToken()},
         logger: (kind, msg, data) => {
             console.log(`${kind}: ${msg}`, data)
         }
-    })
+    });
 
     useEffect(() => {
         getRoom(id)
             .then(r => {
                 if (checkResponse(r)) {
-                    setRoom([r as ChatRoom])
+                    setRoom(r as ChatRoom)
                 }
             })
 
@@ -68,11 +73,38 @@ export default function ChatRoomComponent() {
 
     const showDate = (d: string) => d.split("T")[1]
 
+    const openCharacterModal = (character_id: string) => {
+        CharactersServices.getCharacter(character_id)
+            .then(c => {
+                if (checkResponse(c)) {
+                    setSelectedCharacter(c as Character);
+                    setShowCharacterModal(true);
+                }
+            })
+    }
+
     const getChatElement = (c: ChatLog): Element => {
-        const element = document.createElement("div")
-        element.innerHTML = `[${showDate(c.date)}] - <b>${c.character_name}</b>: ${c.text}`
-        element.className = "chat-log"
-        return element
+        const linkElement = document.createElement("a");
+        linkElement.href = "javascript:void(0);";
+        linkElement.onclick = () => openCharacterModal(c.character_id);
+        linkElement.innerHTML = `<b>${c.character_name}</b>`;
+
+        const linkContainerElement = document.createElement("span");
+        linkContainerElement.appendChild(linkElement);
+
+        const dateElement = document.createElement("span");
+        dateElement.innerHTML = `[${showDate(c.date)}] - `;
+
+        const textElement = document.createElement("span");
+        textElement.innerHTML = `</a>: ${c.text}`;
+
+        const element = document.createElement("div");
+        element.className = "chat-log";
+        element.appendChild(dateElement)
+            .appendChild(linkContainerElement)
+            .appendChild(textElement);
+
+        return element;
     }
 
     const pushLogs = (...cs: ChatLog[]) => {
@@ -89,7 +121,10 @@ export default function ChatRoomComponent() {
 
     return (
         <div id="chat-screen">
-            <h3 style={{"padding": "3px"}}>{room.length === 1 ? room[0].name : "Room"}</h3>
+            <ChatCharacterSheet character={selectedCharacter}
+                                show={showCharacterModal}
+                                onClose={() => setShowCharacterModal(false)} />
+            <h3 style={{"padding": "3px"}}>{room?.name}</h3>
             <div id="chat-show" className="chat-show" />
             <ChatInput className="chat-input" onSubmit={onNewPhrase} />
         </div>

@@ -1,3 +1,8 @@
 .sheet-avatar-container {
     text-align: center;
 }
+
+.sheet-avatar-image {
+    max-width: 200px;
+    height: auto;
+}

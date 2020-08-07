@@ -14,7 +14,11 @@ defmodule TannhauserGateWeb.ChatChannel do
     chats =
       Chats.get_last_chats_by_room(chat_room_id)
       |> Enum.map(fn c ->
-        %{ "id" => c.id, "text" => c.text, "date" => c.inserted_at, "character_name" => c.character } end)
+        %{ "id" => c.id,
+           "text" => c.text,
+           "date" => c.inserted_at,
+           "character_id" => c.character.id,
+           "character_name" => c.character.name } end)
 
     {:ok, %{"chats" => chats}, assign(socket, :chat_id, String.to_integer(chat_room_id))}
   end
@@ -34,6 +38,7 @@ defmodule TannhauserGateWeb.ChatChannel do
         "id" => chat_log.id,
         "text" => chat_log.text,
         "date" => chat_log.inserted_at,
+        "character_id" => chat_log.character.id,
         "character_name" => chat_log.character.name
       })
 

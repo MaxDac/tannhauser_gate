@@ -48,7 +48,9 @@ export default function CharacterSheet() {
         if (character.character !== undefined) {
             return (
                 <div className="sheet-avatar-container">
-                    <img src={`data:image/png;base64,${character.character.avatar}`} alt="avatar" />
+                    <img src={`data:image/png;base64,${character.character.avatar}`}
+                         className="sheet-avatar-image"
+                         alt="avatar" />
                 </div>
             )
         }
