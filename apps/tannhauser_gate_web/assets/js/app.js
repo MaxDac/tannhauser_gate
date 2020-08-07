@@ -5,6 +5,9 @@ import AppContainer from "../ts/app-container";
 
 const _css = require("../css/app.css")
 
+// PWA service worker
+navigator.serviceWorker.register('/service-worker.js')
+
 const index_page = document.getElementById("index-page")
 
 ReactDOM.render(<AppContainer />, index_page)

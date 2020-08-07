@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = (env, options) => ({
   optimization: {
@@ -41,6 +42,15 @@ module.exports = (env, options) => ({
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-    new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
+    new InjectManifest({
+        swSrc: path.resolve(
+            __dirname,
+            // we'll create this file later on
+            './service-worker/service-worker-workbox.ts',
+        ),
+        // this is the output of the plugin,
+        // relative to webpack's output directory
+        swDest: 'service-worker.js',
+      }),
   ]
 });

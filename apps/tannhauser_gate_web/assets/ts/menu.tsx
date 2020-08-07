@@ -40,7 +40,7 @@ export default function Menu(props: MenuProps) {
             <Navbar.Brand href="#/" onClick={toggleNavbar}>
                 <img
                     alt=""
-                    src="/images/logo.png"
+                    src="/images/logo30x30.png"
                     width="30"
                     height="30"
                     className="d-inline-block align-top"

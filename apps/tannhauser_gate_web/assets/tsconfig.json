@@ -67,6 +67,10 @@
     "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
   },
   "exclude": [
-    "/node_modules/**/*"
+    "/node_modules/**/*",
+    "/service_worker/**/*"
+  ],
+  "references": [
+    { "path": "./service-worker" }
   ]
 }
