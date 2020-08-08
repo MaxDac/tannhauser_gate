@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :tannhauser_gate, TannhauserGate.Repo,
   username: "postgres",
-  password: "tannhauser_db",
+  password: "tannhauser-db",
   database: "tannhauser_gate_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
@@ -17,6 +17,12 @@ config :tannhauser_gate, TannhauserGate.Repo,
 # with webpack to recompile .js and .css sources.
 config :tannhauser_gate_web, TannhauserGateWeb.Endpoint,
   http: [port: 4000],
+  https: [
+    port: 4001,
+    cipher_suite: :strong,
+    certfile: "priv/cert/selfsigned.pem",
+    keyfile: "priv/cert/selfsigned_key.pem"
+  ],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
