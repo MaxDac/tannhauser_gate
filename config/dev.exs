@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :tannhauser_gate, TannhauserGate.Repo,
   username: "postgres",
-  password: "tannhauser-db",
+  password: "tannhauser_db",
   database: "tannhauser_gate_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

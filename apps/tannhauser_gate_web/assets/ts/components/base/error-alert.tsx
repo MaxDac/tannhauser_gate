@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Alert from "react-bootstrap/Alert"
+import Alert from "react-bootstrap/Alert";
 
 export interface ErrorAlertProps {
     message: string;
@@ -8,10 +8,10 @@ export interface ErrorAlertProps {
 }
 
 export default function ErrorAlert(props: ErrorAlertProps) {
-    let timeoutRef: number = 0;
+    let timeoutRef: NodeJS.Timeout;
 
     const onClose = () => {
-        if (timeoutRef !== 0) {
+        if (timeoutRef !== undefined) {
             clearTimeout(timeoutRef)
         }
 

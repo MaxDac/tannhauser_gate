@@ -24,7 +24,6 @@ defmodule TannhauserGateWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/index.html", PageController, :index
   end
 
   scope "/", TannhauserGateWeb do

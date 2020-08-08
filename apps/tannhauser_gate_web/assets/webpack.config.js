@@ -42,18 +42,18 @@ module.exports = (env, options) => ({
   },
   plugins: [
     // ...(options.mode === 'production' ? [
-    ...([
-      new InjectManifest({
-        swSrc: path.resolve(
-            __dirname,
-            // we'll create this file later on
-            './ts/serviceWorkerWorkbox.ts',
-        ),
-        // this is the output of the plugin,
-        // relative to webpack's output directory
-        swDest: '/js/service-worker.js',
-      }),
-    ]),
+    // ...([
+    //   new InjectManifest({
+    //     swSrc: path.resolve(
+    //         __dirname,
+    //         // we'll create this file later on
+    //         './ts/serviceWorkerWorkbox.ts',
+    //     ),
+    //     // this is the output of the plugin,
+    //     // relative to webpack's output directory
+    //     swDest: '/js/service-worker.js',
+    //   }),
+    // ]),
     new MiniCssExtractPlugin({ filename: '../css/app.css' }),
     new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
   ]
