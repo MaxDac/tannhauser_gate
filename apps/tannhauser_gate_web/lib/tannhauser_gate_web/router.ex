@@ -7,6 +7,9 @@ defmodule TannhauserGateWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+#    plug Plug.Static,
+#         at: "/", from: :hello_phoenix, gzip: false,
+#         only: ~w(css fonts images js favicon.ico robots.txt index.html)
     plug TannhauserGateWeb.TokenPlug
   end
 
@@ -24,6 +27,12 @@ defmodule TannhauserGateWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/", TannhauserGateWeb do
+    pipe_through :whitelisted_api
+
+    get "/manifest.json", GenericController, :get_manifest
   end
 
   # Other scopes may use custom stacks.
