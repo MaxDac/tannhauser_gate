@@ -39,11 +39,8 @@ defmodule TannhauserGateWeb.PlugHelpers do
 
   @spec assign_tokens(Plug.Conn.t(), String.t()) :: Plug.Conn.t()
   def assign_tokens(conn, user_id) do
-    token = Phoenix.Token.sign(conn, "user socket", user_id)
-
     conn
     |> assign(:user_id, user_id)
-    |> assign(:user_token, token)
   end
 
   @spec call_impl(Plug.Conn.t(), bool) :: Plug.Conn.t()

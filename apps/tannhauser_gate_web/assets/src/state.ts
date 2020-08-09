@@ -72,7 +72,8 @@ function persistMiddleware({ getState }: any) {
 }
 
 function rehydrateStore() {
-    const serializedState = sessionStorage.getItem("user-state")
+    const serializedState = sessionStorage.getItem("user-state");
+    console.log(`serialized state: ${serializedState}`);
 
     if (serializedState === undefined || serializedState === "") {
         return createStore(reducer)
@@ -83,11 +84,13 @@ function rehydrateStore() {
 }
 
 function persistState(state: StateContainer<UserState>) {
-    clearPersistedState()
-    sessionStorage.setItem("user-state", JSON.stringify(state))
+    console.log("persisting new state", state);
+    clearPersistedState();
+    sessionStorage.setItem("user-state", JSON.stringify(state));
 }
 
 function clearPersistedState() {
+    console.log("Clearing persisting state");
     sessionStorage.clear()
 }
 

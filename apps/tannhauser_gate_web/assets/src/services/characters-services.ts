@@ -4,15 +4,15 @@ import {get, post} from "./base";
 import {ErrorResponse} from "./error-response";
 
 export function createCharacter(character: RegistrationCharacter): Promise<Character | ErrorResponse> {
-    return post<Character>("/api/characters", {
+    return post<Character>("/characters", {
         character: character
     })
 }
 
 export function listCharacters(userId: string): Promise<Character[] | ErrorResponse> {
-    return get<Character[]>(`/api/characters/list/${userId}`)
+    return get<Character[]>(`/characters/list/${userId}`)
 }
 
 export function getCharacter(id: string): Promise<Character | ErrorResponse> {
-    return get<Character>(`/api/characters/${id}`)
+    return get<Character>(`/characters/${id}`)
 }

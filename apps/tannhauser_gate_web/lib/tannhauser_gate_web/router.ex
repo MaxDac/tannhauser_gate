@@ -29,12 +29,6 @@ defmodule TannhauserGateWeb.Router do
     get "/", PageController, :index
   end
 
-  scope "/", TannhauserGateWeb do
-    pipe_through :whitelisted_api
-
-    get "/manifest.json", GenericController, :get_manifest
-  end
-
   # Other scopes may use custom stacks.
   scope "/api", TannhauserGateWeb do
     pipe_through :whitelisted_api
@@ -54,5 +48,6 @@ defmodule TannhauserGateWeb.Router do
     get "/rooms", ChatController, :get_chat_rooms
     get "/rooms/:id", ChatController, :get_chat_room
     get "/chat/logs/:room_id", ChatController, :get_chat_logs_by_room
+    post "/chat/token", AuthenticationController, :request_chat_token
   end
 end

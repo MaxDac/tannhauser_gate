@@ -2,42 +2,13 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import Form from "react-bootstrap/Form";
 import Character from "../../dtos/characters/character";
 import {storeCharacter, store, clearState} from "../../state";
-import {checkResponse, ErrorResponse} from "../../services/error-response";
+import {checkResponse} from "../../services/error-response";
 import {listCharacters} from "../../services/characters-services";
 
-export default function CharacterSelection(props: any) {
+export default function CharacterSelection() {
     const [characters, setCharacters] = useState<Character[]>([]);
     const [selectedCharacterId, setSelectedCharacterId] = useState("");
-
-    const getCharacters = () => {
-        if (store.getState().state?.user !== undefined) {
-            listCharacters(store.getState().state?.user.id as string)
-                .then(cs => {
-                    if (checkResponse(cs)) {
-                        setCharacters(cs as Character[]);
-                        checkCharaterInState();
-                    }
-                    else {
-                        clearState(store);
-                        window.location.href = "/login/unauthorized";
-                        window.location.reload();
-                    }
-                });
-        }
-    }
-
-    const checkCharaterInState = () => {
-        if (store.getState().state?.character === undefined &&
-            characters !== undefined &&
-            characters.length > 0) {
-            storeCharacter(store, characters[0]);
-        }
-    }
-
-    useEffect(() => {
-        setSelectedCharacterId(selectValue());
-        getCharacters();
-    }, []);
+    const [loggedUserId, _] = useState(store.getState().state?.user?.id);
 
     const loggedRightMenuSelectOptions = () => {
         if (characters !== undefined) {
@@ -58,6 +29,33 @@ export default function CharacterSelection(props: any) {
 
         return "";
     }
+
+    useEffect(() => {
+        // setSelectedCharacterId(selectValue());
+
+        const checkCharacterInState = () => {
+            if (store.getState().state?.character === undefined &&
+                characters !== undefined &&
+                characters.length > 0) {
+                storeCharacter(store, characters[0]);
+            }
+        }
+
+        if (loggedUserId !== undefined) {
+            listCharacters(loggedUserId as string)
+                .then(cs => {
+                    if (checkResponse(cs)) {
+                        setCharacters(cs as Character[]);
+                        checkCharacterInState();
+                    }
+                    else {
+                        clearState(store);
+                        window.location.href = "/login/unauthorized";
+                        window.location.reload();
+                    }
+                });
+        }
+    }, [loggedUserId]);
 
     const onCharacterChanged = (e: ChangeEvent<HTMLSelectElement>) => {
         const selectedId = e.target.value;

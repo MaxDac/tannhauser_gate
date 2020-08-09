@@ -16,19 +16,19 @@ export interface FileDropProps {
 }
 
 export default function FileDrop(props: FileDropProps) {
-    const [validated, setValidated] = useState(false);
+    // const [_validated, setValidated] = useState(false);
     const [avatar, setAvatar] = useState("")
 
-    const handleSubmit = (event: any) => {
-        const form = event.currentTarget;
-
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        setValidated(true);
-    };
+    // const handleSubmit = (event: any) => {
+    //     const form = event.currentTarget;
+    //
+    //     if (form.checkValidity() === false) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //     }
+    //
+    //     setValidated(true);
+    // };
 
     const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file: any) => {
@@ -71,7 +71,7 @@ export default function FileDrop(props: FileDropProps) {
             reader.readAsArrayBuffer(file)
         })
 
-    }, []);
+    }, [props]);
 
     const showActiveRegion = (text: string) => {
         return (

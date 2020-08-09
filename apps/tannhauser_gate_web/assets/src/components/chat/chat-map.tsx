@@ -28,13 +28,13 @@ export default function ChatMap() {
                     }
                 }
             })
-    }, [])
+    }, [history])
 
     const indicators = () => {
         const rows = []
 
         for (const room of rooms) {
-            const [x, y, ..._] =
+            const [x, y] =
                 room.coords
                     .split(",")
                     .map(x => parseInt(x))
@@ -51,17 +51,19 @@ export default function ChatMap() {
                 <img src="images/map-dot-blurred.png"
                      key={`${room.id}`}
                      className="background-map-dot"
-                     style={rowPositionStyle} />
+                     style={rowPositionStyle}
+                     alt={`map-under-${room.id}`} />
             )
 
             rows.push(
                 <img src="images/map-dot.png"
                      key={`${room.id}hover`}
                      className="selected-map-dot"
-                     onMouseOver={e => setSelectedRoom(room.name)}
-                     onMouseOut={e => setSelectedRoom("")}
+                     onMouseOver={() => setSelectedRoom(room.name)}
+                     onMouseOut={() => setSelectedRoom("")}
                      onClick={() => history.push(`/chat/${room.id}`)}
-                     style={rowPositionStyle} />
+                     style={rowPositionStyle}
+                     alt={`map-selector-${room.id}`} />
             )
         }
 

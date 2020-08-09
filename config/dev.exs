@@ -25,8 +25,13 @@ config :tannhauser_gate_web, TannhauserGateWeb.Endpoint,
   ],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false #,
-#  watchers: [
+  check_origin: false,
+  watchers: [
+    node: [
+      "node_modules/react-scripts/bin/react-scripts.js",
+      "start",
+      cd: Path.expand("../apps/tannhauser_gate_web/assets", __DIR__)
+    ]
 #    node: [
 #      "node_modules/webpack/bin/webpack.js",
 #      "--mode",
@@ -34,7 +39,7 @@ config :tannhauser_gate_web, TannhauserGateWeb.Endpoint,
 #      "--watch-stdin",
 #      cd: Path.expand("../apps/tannhauser_gate_web/assets", __DIR__)
 #    ]
-#  ]
+  ]
 
 # ## SSL Support
 #
