@@ -1,9 +1,0 @@
-/* This file is for your main application css. */
-
-/*@import "./phoenix.css";*/
-@import "./phoenix-alerts.css";
-@import "./bootstrap.min.css";
-
-body {
-    background-color: #222;
-}
