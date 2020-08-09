@@ -30,7 +30,7 @@ export default function CharacterList() {
             history.push("/login")
         }
 
-    }, [])
+    }, [history])
 
     const rows = () => {
         const rs = []

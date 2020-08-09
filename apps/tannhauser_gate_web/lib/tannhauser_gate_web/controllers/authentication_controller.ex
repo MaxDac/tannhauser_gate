@@ -3,6 +3,7 @@ defmodule TannhauserGateWeb.AuthenticationController do
 
   alias TannhauserGate.Users
   alias TannhauserGateWeb.ErrorView
+  alias TannhauserGateWeb.GenericView
   alias TannhauserGateWeb.UserView
   alias TannhauserGateWeb.JwtToken
 
@@ -29,6 +30,25 @@ defmodule TannhauserGateWeb.AuthenticationController do
         |> put_view(UserView)
         |> render("show.json", user: user)
     end
+  end
+
+  @spec assign_tokens(Plug.Conn.t(), String.t()) :: Plug.Conn.t()
+  def assign_tokens(conn, user_id) do
+    token = Phoenix.Token.sign(conn, "user socket", user_id)
+
+    conn
+    |> assign(:user_id, user_id)
+    |> assign(:user_token, token)
+  end
+
+  @spec request_chat_token(Plug.Conn.t(), map) :: Plug.Conn.t()
+  def request_chat_token(conn, _) do
+    user_id = conn.assigns[:user_id]
+    token = Phoenix.Token.sign(conn, "user socket", user_id)
+
+    conn
+      |> put_view(GenericView)
+      |> render("code.json", code: token)
   end
 
   @spec logout(Plug.Conn.t(), map) :: Plug.Conn.t()

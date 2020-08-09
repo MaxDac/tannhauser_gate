@@ -4,7 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import AppContainer from './app-container';
 
-const _css = require("./css/app.css");
+require("./css/app.css");
 
 ReactDOM.render(
   <React.StrictMode>

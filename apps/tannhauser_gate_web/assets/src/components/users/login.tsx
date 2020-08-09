@@ -27,7 +27,7 @@ export default function Login(props: LoginProps) {
             setErrorMessage("Login expired, please log on again.")
             setShowModal(true)
         }
-    }, [])
+    }, [props.isUnauthorized])
 
     const buildErrorMessage = (e: ErrorResponse) => {
         if (e.errors.length === 1) {

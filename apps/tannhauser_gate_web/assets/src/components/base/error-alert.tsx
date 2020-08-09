@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import Alert from "react-bootstrap/Alert";
 
 export interface ErrorAlertProps {
@@ -8,11 +8,11 @@ export interface ErrorAlertProps {
 }
 
 export default function ErrorAlert(props: ErrorAlertProps) {
-    let timeoutRef: NodeJS.Timeout;
+    const timeoutRef = useRef(undefined as NodeJS.Timeout | undefined);
 
     const onClose = () => {
-        if (timeoutRef !== undefined) {
-            clearTimeout(timeoutRef)
+        if (timeoutRef.current !== undefined) {
+            clearTimeout(timeoutRef.current)
         }
 
         props.onClose();
@@ -20,9 +20,9 @@ export default function ErrorAlert(props: ErrorAlertProps) {
 
     useEffect(() => {
         if (props.show) {
-            timeoutRef = setTimeout(onClose, 5000)
+            timeoutRef.current = setTimeout(onClose, 5000)
         }
-    }, [])
+    })
 
     const showError = () => {
         if (props.show) {

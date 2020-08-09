@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -26,7 +26,7 @@ export default function Menu(props: MenuProps) {
 
     const loggedRightMenu = () =>
         <Nav>
-            <CharacterSelection history={(props as any).history} />
+            <CharacterSelection />
             <Nav.Link href="#/logout" onClick={toggleNavbar}>Logout</Nav.Link>
         </Nav>;
 

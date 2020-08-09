@@ -38,7 +38,7 @@ export default function CharacterSheet() {
                     setShowError(true)
                 }
             })
-    }, [])
+    }, [history, id])
 
     const onErrorClose = () => {
         setShowError(false)

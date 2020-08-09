@@ -7,14 +7,13 @@ export interface LogoutProps {
 }
 
 export default function Logout(props: LogoutProps) {
-
     useEffect(() => {
         logout()
             .then(_ => {
                 props.onLogout()
                 reloadFromServer("#/")
             })
-    }, [])
+    })
 
     return (
         <div>Logging out... </div>
