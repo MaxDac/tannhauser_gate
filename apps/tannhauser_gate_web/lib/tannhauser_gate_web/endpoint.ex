@@ -21,8 +21,8 @@ defmodule TannhauserGateWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :tannhauser_gate_web,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    gzip: false
+#    only: ~w(css fonts static images js favicon.ico robots.txt index.html)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

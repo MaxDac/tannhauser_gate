@@ -25,7 +25,7 @@ export function last<T>(arr: T[]): T | undefined {
 export function clearCookies() {
     const cookies = document.cookie.split(";")
     const domainParts = window.location.hostname.split(".")
-    const locationParts = location.pathname.split("/")
+    const locationParts = window.location.pathname.split("/")
 
     for (const cookie of cookies) {
         domainParts.forEach((v, idx, _) => {
