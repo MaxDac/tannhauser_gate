@@ -5,7 +5,7 @@ config :tannhauser_gate, TannhauserGate.Repo,
   username: "postgres",
   password: "tannhauser-db",
   database: "tannhauser_gate_dev",
-  hostname: "localhost",
+  hostname: "192.168.0.161",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

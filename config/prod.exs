@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :tannhauser_gate_web, TannhauserGateWeb.Endpoint,
   http: [port: 8080],
-  url: [host: "localhost", port: 8080],
+  url: [host: "tannhausergate.com", port: 8080],
   debug_errors: true,
   server: true#,
 #  cache_static_manifest: "priv/static/manifest/cache_manifest.json"
