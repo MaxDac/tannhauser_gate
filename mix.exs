@@ -5,7 +5,13 @@ defmodule TannhauserGate.Umbrella.MixProject do
     [
       apps_path: "apps",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+#      deps: deps(),
+      releases: [
+        tannhauser_gate: [
+          version: "0.0.1",
+          applications: [tannhauser_gate: :permanent, tannhauser_gate_web: :permanent]
+        ]
+      ]
     ]
   end
 
@@ -21,9 +27,10 @@ defmodule TannhauserGate.Umbrella.MixProject do
   #
   # Dependencies listed here are available only for this project
   # and cannot be accessed from applications inside the apps folder
-  defp deps do
-    [
-      {:pbkdf2_elixir, "~> 1.0"}
-    ]
-  end
+#  defp deps do
+#    [
+#      {:pbkdf2_elixir, "~> 1.2"},
+#      {:pbkdf2, "~> 2.0"}
+#    ]
+#  end
 end

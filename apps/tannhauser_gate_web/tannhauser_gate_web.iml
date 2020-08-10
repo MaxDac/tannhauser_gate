@@ -54,5 +54,7 @@
     <orderEntry type="library" name="libsodium" level="project" />
     <orderEntry type="library" name="ojson" level="project" />
     <orderEntry type="library" name="poison" level="project" />
+    <orderEntry type="library" name="pbkdf2_elixir" level="project" />
+    <orderEntry type="library" name="comeonin" level="project" />
   </component>
 </module>

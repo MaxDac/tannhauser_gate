@@ -3,6 +3,8 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/_build/dev/lib/pbkdf2_elixir/ebin" />
       <root url="file://$PROJECT_DIR$/_build/dev/consolidated" />
+      <root url="file://$PROJECT_DIR$/_build/prod/lib/pbkdf2_elixir/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/prod/consolidated" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
