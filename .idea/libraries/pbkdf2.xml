@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="pbkdf2" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/pbkdf2/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/prod/consolidated" />
+      <root url="file://$PROJECT_DIR$/_build/dev/consolidated" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/pbkdf2/src" />
+    </SOURCES>
+  </library>
+</component>

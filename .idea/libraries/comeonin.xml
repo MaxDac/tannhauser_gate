@@ -3,6 +3,8 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/_build/dev/lib/comeonin/ebin" />
       <root url="file://$PROJECT_DIR$/_build/dev/consolidated" />
+      <root url="file://$PROJECT_DIR$/_build/prod/lib/comeonin/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/prod/consolidated" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
