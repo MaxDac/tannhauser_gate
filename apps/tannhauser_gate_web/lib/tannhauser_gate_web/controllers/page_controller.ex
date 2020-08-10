@@ -5,7 +5,7 @@ defmodule TannhauserGateWeb.PageController do
 
   def index(conn, _params) do
 #    render(conn, "index.html")
-    conns
+    conn
     |> put_resp_header("content-type", "text/html; charset=utf-8")
     |> send_file(200, Application.app_dir(:tannhauser_gate_web, "priv/static/index.html"))
   end
