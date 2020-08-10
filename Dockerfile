@@ -54,5 +54,5 @@ COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/tannhauser_gate ./
 
 ENV HOME=/app
 
-CMD ["bin/my_app", "start"]
+CMD ["bin/tannhauser_gate", "start"]
 
