@@ -15,10 +15,11 @@ RUN mix local.hex --force && \
     mix archive.install hex phx_new 1.5.4 --force
 
 ARG SECRET_KEY
+ARG DB_CONN
 
 # set build ENV
 ENV MIX_ENV=prod \
-    DATABASE_URL=ecto://postgres:tannhauser-db@postgres/tannhauser_gate_dev \
+    DATABASE_URL=$DB_CONN \
     SECRET_KEY_BASE=$SECRET_KEY
 
 # install mix dependencies
