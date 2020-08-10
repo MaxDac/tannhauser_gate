@@ -18,7 +18,7 @@ ARG SECRET_KEY
 
 # set build ENV
 ENV MIX_ENV=prod \
-    DATABASE_URL=ecto://phoenix:tannhauser-db@localhost/tannhauser_gate_dev \
+    DATABASE_URL=ecto://phoenix:tannhauser-db@postgres/tannhauser_gate_dev \
     SECRET_KEY_BASE=$SECRET_KEY
 
 # install mix dependencies
