@@ -2,6 +2,8 @@ secret_key=$(mix phx.gen.secret)
 export SECRET_KEY_BASE=secret_key
 export DATABASE_URL="ecto://$1:$2@$3/$4"
 
+cd ../
+
 mix deps.get # --only prod
 mix deps.compile
 

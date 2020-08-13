@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: chat
+  namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+
+spec:
+  type: LoadBalancer
+  selector:
+    app: chat
+  ports:
+    - name: http
+      port: 9090
+      targetPort: 4000

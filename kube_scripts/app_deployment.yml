@@ -1,0 +1,30 @@
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: chat
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chat
+  template:
+    metadata:
+      labels:
+        app: chat
+    spec:
+      containers:
+        - name: tannhauser-gate
+          image: tannhauser_gate_test:0.5
+          ports:
+            - containerPort: 4000
+          env:
+            - name: PORT
+              value: "4000"
+            - name: PHOENIX_CHAT_HOST
+              value: "chat.poeticoding.com"
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
