@@ -9,4 +9,3 @@ else
 fi
 
 sh build-docker-image.sh postgres tannhauser-db postgres tannhauser_gate_dev tannhauser_gate_test "$version"
-
