@@ -46,7 +46,9 @@ defmodule TannhauserGateWeb.MixProject do
       {:tannhauser_gate, in_umbrella: true},
       {:joken, "~> 2.0"},
       {:jason, "~> 1.1"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:httpoison, "~> 1.7"},
+      {:poison, "~> 4.0"}
     ]
   end
 

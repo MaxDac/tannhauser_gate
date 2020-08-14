@@ -9,9 +9,10 @@ defmodule TannhauserGateWeb.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      TannhauserGateWeb.Endpoint
+      TannhauserGateWeb.Endpoint,
       # Starts a worker by calling: TannhauserGateWeb.Worker.start_link(arg)
       # {TannhauserGateWeb.Worker, arg},
+      TannhauserGateWeb.AppConnector
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

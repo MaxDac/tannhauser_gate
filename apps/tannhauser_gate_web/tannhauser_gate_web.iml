@@ -56,5 +56,14 @@
     <orderEntry type="library" name="poison" level="project" />
     <orderEntry type="library" name="pbkdf2_elixir" level="project" />
     <orderEntry type="library" name="comeonin" level="project" />
+    <orderEntry type="library" name="httpoison" level="project" />
+    <orderEntry type="library" name="mimic" level="project" />
+    <orderEntry type="library" name="httparrot" level="project" />
+    <orderEntry type="library" name="benchee_json" level="project" />
+    <orderEntry type="library" name="benchee_html" level="project" />
+    <orderEntry type="library" name="exjsx" level="project" />
+    <orderEntry type="library" name="tiny" level="project" />
+    <orderEntry type="library" name="jiffy" level="project" />
+    <orderEntry type="library" name="json" level="project" />
   </component>
 </module>
