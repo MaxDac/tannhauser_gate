@@ -25,43 +25,38 @@ rand () {
   od -t xS -N 2 -A n /dev/urandom | tr -d " \n"
 }
 
-release_distribution () {
-  case $RELEASE_DISTRIBUTION in
-    none)
-      ;;
-
-    name | sname)
-      echo "--$RELEASE_DISTRIBUTION $1"
-      ;;
-
-    *)
-      echo "ERROR: Expected sname, name, or none in RELEASE_DISTRIBUTION, got: $RELEASE_DISTRIBUTION" >&2
-      exit 1
-      ;;
-  esac
+rpc () {
+  exec "$REL_VSN_DIR/elixir" \
+       --hidden --cookie "$RELEASE_COOKIE" \
+       --$RELEASE_DISTRIBUTION "rpc-$(rand)-$RELEASE_NODE" \
+       --boot "$REL_VSN_DIR/$RELEASE_BOOT_SCRIPT_CLEAN" \
+       --boot-var RELEASE_LIB "$RELEASE_ROOT/lib" \
+       --rpc-eval "$RELEASE_NODE" "$1"
 }
 
 start () {
-  echo "REL DIR $REL_VSN_DIR}"
+  echo $RELEASE_DISTRIBUTION
+  echo $RELEASE_NODE
+  echo $MY_POD_NAMESPACE
+  echo $MY_POD_IP
   export_release_sys_config
   REL_EXEC="$1"
   shift
   exec "$REL_VSN_DIR/$REL_EXEC" \
-       --cookie "$RELEASE_COOKIE" \
-       $(release_distribution "$RELEASE_NODE") \
+       --cookie "$ERLANG_COOKIE" \
+       --name "$MY_POD_NAMESPACE@$MY_POD_IP" \
        --erl "-mode $RELEASE_MODE" \
        --erl-config "$RELEASE_SYS_CONFIG" \
        --boot "$REL_VSN_DIR/$RELEASE_BOOT_SCRIPT" \
        --boot-var RELEASE_LIB "$RELEASE_ROOT/lib" \
-       --vm-args "$RELEASE_VM_ARGS" "$@" \
-       --name "$MY_POD_NAMESPACE@$MY_POD_IP"
+       --vm-args "$RELEASE_VM_ARGS" "$@"
 }
 
 export_release_sys_config () {
   if grep -q "RUNTIME_CONFIG=true" "$REL_VSN_DIR/sys.config"; then
     RELEASE_SYS_CONFIG="$RELEASE_TMP/$RELEASE_NAME-$RELEASE_VSN-$(date +%Y%m%d%H%M%S)-$(rand).runtime"
 
-    (mkdir -p "$RELEASE_TMP" && cat "$REL_VSN_DIR/sys.config" >"$RELEASE_SYS_CONFIG.config") || (
+    (mkdir -p "$RELEASE_TMP" && cp "$REL_VSN_DIR/sys.config" "$RELEASE_SYS_CONFIG.config") || (
       echo "ERROR: Cannot start release because it could not write $RELEASE_SYS_CONFIG.config" >&2
       exit 1
     )

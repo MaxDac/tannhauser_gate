@@ -1,0 +1,11 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Credo" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="KeywordPairColonInsteadOfTypeOperator" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="KeywordsNotAtEnd" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="MatchOperatorInsteadOfTypeOperator" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="NoParenthesesManyStrict" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="NoParenthesesStrict" enabled="true" level="WARNING" enabled_by_default="true" />
+  </profile>
+</component>

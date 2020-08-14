@@ -4,10 +4,10 @@ use Mix.Config
 config :tannhauser_gate, TannhauserGate.Repo,
   username: "postgres",
   password: "tannhauser-db",
-  database: "tannhauser_db",
+  database: "tannhauser_gate_dev",
 #  hostname: "192.168.0.161",
   hostname: "localhost",
-  port: 32244,
+  # port: 32244,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
