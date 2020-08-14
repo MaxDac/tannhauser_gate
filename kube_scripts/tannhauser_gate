@@ -35,16 +35,13 @@ rpc () {
 }
 
 start () {
-  echo $RELEASE_DISTRIBUTION
-  echo $RELEASE_NODE
-  echo $MY_POD_NAMESPACE
-  echo $MY_POD_IP
+  echo "$RELEASE_NODE"
   export_release_sys_config
   REL_EXEC="$1"
   shift
   exec "$REL_VSN_DIR/$REL_EXEC" \
-       --cookie "$ERLANG_COOKIE" \
-       --name "$MY_POD_NAMESPACE@$MY_POD_IP" \
+       --cookie "$RELEASE_COOKIE" \
+       --$RELEASE_DISTRIBUTION "$RELEASE_NODE" \
        --erl "-mode $RELEASE_MODE" \
        --erl-config "$RELEASE_SYS_CONFIG" \
        --boot "$REL_VSN_DIR/$RELEASE_BOOT_SCRIPT" \
@@ -67,4 +64,88 @@ export_release_sys_config () {
   export RELEASE_SYS_CONFIG
 }
 
-start "elixir" --no-halt
+case $1 in
+  start)
+    start "elixir" --no-halt
+    ;;
+
+  start_iex)
+    start "iex" --werl
+    ;;
+
+  daemon)
+    start "elixir" --no-halt --pipe-to "${RELEASE_TMP}/pipe" "${RELEASE_TMP}/log"
+    ;;
+
+  daemon_iex)
+    start "iex" --pipe-to "${RELEASE_TMP}/pipe" "${RELEASE_TMP}/log"
+    ;;
+
+  eval)
+    if [ -z "$2" ]; then
+      echo "ERROR: EVAL expects an expression as argument" >&2
+      exit 1
+    fi
+
+    export_release_sys_config
+    exec "$REL_VSN_DIR/elixir" \
+       --cookie "$RELEASE_COOKIE" \
+       --erl-config "$RELEASE_SYS_CONFIG" \
+       --boot "$REL_VSN_DIR/$RELEASE_BOOT_SCRIPT_CLEAN" \
+       --boot-var RELEASE_LIB "$RELEASE_ROOT/lib" \
+       --vm-args "$RELEASE_VM_ARGS" --eval "$2"
+    ;;
+
+  remote)
+    exec "$REL_VSN_DIR/iex" \
+         --werl --hidden --cookie "$RELEASE_COOKIE" \
+         --$RELEASE_DISTRIBUTION "rem-$(rand)-$RELEASE_NODE" \
+         --boot "$REL_VSN_DIR/$RELEASE_BOOT_SCRIPT_CLEAN" \
+         --boot-var RELEASE_LIB "$RELEASE_ROOT/lib" \
+         --remsh "$RELEASE_NODE"
+    ;;
+
+  rpc)
+    if [ -z "$2" ]; then
+      echo "ERROR: RPC expects an expression as argument" >&2
+      exit 1
+    fi
+    rpc "$2"
+    ;;
+
+  restart|stop)
+    rpc "System.$1"
+    ;;
+
+  pid)
+    rpc "IO.puts System.pid"
+    ;;
+
+  version)
+    echo "$RELEASE_NAME $RELEASE_VSN"
+    ;;
+
+  *)
+    echo "Usage: $(basename "$0") COMMAND [ARGS]
+
+The known commands are:
+
+    start          Starts the system
+    start_iex      Starts the system with IEx attached
+    daemon         Starts the system as a daemon
+    daemon_iex     Starts the system as a daemon with IEx attached
+    eval \"EXPR\"    Executes the given expression on a new, non-booted system
+    rpc \"EXPR\"     Executes the given expression remotely on the running system
+    remote         Connects to the running system via a remote shell
+    restart        Restarts the running system via a remote command
+    stop           Stops the running system via a remote command
+    pid            Prints the OS PID of the running system via a remote command
+    version        Prints the release name and version to be booted
+" >&2
+
+    if [ -n "$1" ]; then
+      echo "ERROR: Unknown command $1" >&2
+      exit 1
+    fi
+    ;;
+esac

@@ -5,15 +5,24 @@ defmodule TannhauserGateWeb.Application do
 
   use Application
 
+  @spec start(any, any) :: {:error, any} | {:ok, pid}
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      TannhauserGateWeb.Endpoint,
+      TannhauserGateWeb.Endpoint
       # Starts a worker by calling: TannhauserGateWeb.Worker.start_link(arg)
       # {TannhauserGateWeb.Worker, arg},
-      TannhauserGateWeb.AppConnector
+      # TannhauserGateWeb.AppConnector
     ]
+
+    children =
+      cond do
+        System.get_env("CHECK_DB") == "S" ->
+          children ++ [TannhauserGateWeb.AppConnector]
+        true ->
+          children
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

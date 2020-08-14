@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
         - name: tannhauser-gate
-          image: tannhauser_gate_test:0.25
+          image: tannhauser_gate_test:0.30
           ports:
             - containerPort: 4000
-          args: ["bin/tannhauser_gate_prd"]
+          args: ["bin/tannhauser_gate", "start"]
           env:
             - name: PORT
               value: "4000"
@@ -35,11 +35,19 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: ERLANG_COOKIE
+            - name: RELEASE_COOKIE
               valueFrom:
                 secretKeyRef:
                   name: app-config
                   key: erlang-cookie
+            - name: RELEASE_DISTRIBUTION
+              value: "name"
+            - name: RELEASE_NAME
+              value: "$(MY_POD_NAMESPACE)"
+            - name: RELEASE_NODE
+              value: "$(MY_POD_NAMESPACE)@$(MY_POD_IP)"
+            - name: CHECK_DB
+              value: "S"
         - name: kube-proxy
           image: bitnami/kubectl
           imagePullPolicy: Always
