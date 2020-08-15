@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tannhauser-db-update
+spec:
+  template:
+    spec:
+      containers:
+      - name: db-updater
+        image: tannhauser_db_update:0.1
+        env:
+          - name: DB_HOST
+            value: "postgres"
+          - name: DB_NAME
+            value: "tannhauser_db"
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            value: "postgres"
+          - name: DB_PASS
+            value: "tannhauser-db"
+      restartPolicy: Never
+  backoffLimit: 4

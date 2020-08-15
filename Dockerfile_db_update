@@ -37,6 +37,6 @@ RUN mix do deps.get, deps.compile
 # COPY rel rel
 RUN mix do compile
 
-COPY scripts/update_db.sh update_db.sh
+COPY kube_scripts/update_db.sh update_db.sh
 
 CMD ["/bin/sh", "/app/update_db.sh"]
