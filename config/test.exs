@@ -3,8 +3,9 @@ use Mix.Config
 # Configure your database
 config :tannhauser_gate, TannhauserGate.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "tannhauser-db",
   database: "tannhauser_gate_test",
+  #  hostname: "192.168.0.161",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
