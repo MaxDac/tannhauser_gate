@@ -2,12 +2,11 @@ use Mix.Config
 
 # Configure your database
 config :tannhauser_gate, TannhauserGate.Repo,
-  username: "postgres",
-  password: "tannhauser-db",
-  database: "tannhauser_gate_dev",
-#  hostname: "192.168.0.161",
-  hostname: "localhost",
-  # port: 32244,
+  username: System.get_env("DB_USER"),
+  password: System.get_env("DB_PASS"),
+  database: System.get_env("DB_NAME"),
+  hostname: System.get_env("DB_HOST"),
+  port: System.get_env("DB_PORT"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
