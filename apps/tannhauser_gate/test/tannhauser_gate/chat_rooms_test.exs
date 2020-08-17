@@ -6,9 +6,13 @@ defmodule TannhauserGate.ChatRoomsTest do
   describe "chat_rooms" do
     alias TannhauserGate.ChatRooms.ChatRoom
 
-    @valid_attrs %{description: "some description", image: "some image", name: "some name"}
-    @update_attrs %{description: "some updated description", image: "some updated image", name: "some updated name"}
-    @invalid_attrs %{description: nil, image: nil, name: nil}
+    @valid_attrs %{description: "some description", image: "some image", name: "some name", coords: "100,100,20"}
+    @update_attrs %{description: "some updated description",
+                    image: "some updated image",
+                    name: "some updated name",
+                    coords: "100,100,20"
+                  }
+    @invalid_attrs %{name: nil, coords: nil}
 
     def chat_room_fixture(attrs \\ %{}) do
       {:ok, chat_room} =

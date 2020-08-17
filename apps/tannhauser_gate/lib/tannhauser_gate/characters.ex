@@ -25,11 +25,11 @@ defmodule TannhauserGate.Characters do
 
   """
   def list_characters do
-    Repo.all(list_characters_query)
+    Repo.all(list_characters_query())
   end
 
   def list_characters_by_user(user_id) do
-    result = Repo.all(from c in list_characters_query, where: c.user_id == ^user_id)
+    result = Repo.all(from c in list_characters_query(), where: c.user_id == ^user_id)
     IO.inspect result
     result
   end
@@ -48,11 +48,18 @@ defmodule TannhauserGate.Characters do
       ** (Ecto.NoResultsError)
 
   """
-  def get_character!(id) do
-    result = Repo.get!(Character, id) |> Repo.preload(:user)
-    IO.inspect %{result | avatar: ""}
-    result
+  def get_character(id) do
+    use MonadMacro
+
+    case Repo.get(Character, id) do
+      nil -> {:error, :not_found}
+      c   -> {:ok, c}
+    end
+    |> Repo.preload(:user)
   end
+
+  def get_character!(id), do:
+    Repo.get!(Character, id) |> Repo.preload(:user)
 
   @doc """
   Creates a character.

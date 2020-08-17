@@ -40,6 +40,11 @@ defmodule TannhauserGate.Chats do
   """
   def get_chat!(id), do: Repo.get!(Chat, id) |> Repo.preload(:character)
 
+  def get_chat_with_room!(id), do:
+    Repo.get!(Chat, id)
+    |> Repo.preload(:character)
+    |> Repo.preload(:chat_rooms)
+
   defp nested_character_query(), do:
     from c in Character, select: %{ id: c.id, name: c.name }
 
