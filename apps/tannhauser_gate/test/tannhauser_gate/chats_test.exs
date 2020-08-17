@@ -19,11 +19,11 @@ defmodule TannhauserGate.ChatsTest do
     @character_attrs %{avatar: "some avatar", description: "some description", name: "some name", notes: "some notes"}
     @chat_rooms_attrs %{description: "some description", image: "some image", name: "some name", coords: "100,100,20"}
 
-    @valid_attrs %{chat_rooms_id: nil, character_id: nil, date: 42, text: "some text"}
-    @update_attrs %{date: 43, text: "some updated text"}
-    @invalid_attrs %{date: nil, text: nil}
+    @valid_attrs %{text: "some text"}
+    @update_attrs %{text: "some updated text"}
+    @invalid_attrs %{text: nil}
 
-    def chat_fixture(attrs \\ %{}) do
+    def chat_deps_fixture do
       {:ok, %User{id: user_id}} =
         @user_attrs
         |> Users.create_user()
@@ -37,6 +37,18 @@ defmodule TannhauserGate.ChatsTest do
         @chat_rooms_attrs
         |> ChatRooms.create_chat_room()
 
+      %{
+        character_id: character_id,
+        chat_rooms_id: chat_rooms_id
+      }
+    end
+
+    def chat_fixture(attrs \\ %{}) do
+      %{
+        character_id: character_id,
+        chat_rooms_id: chat_rooms_id
+      } = chat_deps_fixture
+
       chat_attrs =
         @valid_attrs
         |> Map.put(:character_id, character_id)
@@ -48,6 +60,17 @@ defmodule TannhauserGate.ChatsTest do
         |> Chats.create_chat()
 
       chat
+    end
+
+    def build_valid_args() do
+      %{
+        character_id: character_id,
+        chat_rooms_id: chat_rooms_id
+      } = chat_deps_fixture
+
+      @valid_attrs
+      |> Map.put(:character_id, character_id)
+      |> Map.put(:chat_rooms_id, chat_rooms_id)
     end
 
     test "list_chat/0 returns all chat" do
@@ -71,21 +94,32 @@ defmodule TannhauserGate.ChatsTest do
     end
 
     test "create_chat/1 with valid data creates a chat" do
-      assert {:ok, %Chat{} = chat} = Chats.create_chat(@valid_attrs)
-      assert chat.date == 42
+      %{
+        character_id: character_id,
+        chat_rooms_id: chat_rooms_id
+      } = chat_deps_fixture
+
+      attrs =
+        @valid_attrs
+        |> Map.put(:character_id, character_id)
+        |> Map.put(:chat_rooms_id, chat_rooms_id)
+
+      assert {:ok, %Chat{} = chat} = Chats.create_chat(attrs)
       assert chat.text == "some text"
+      assert chat.character_id == character_id
+      assert chat.chat_rooms_id == chat_rooms_id
     end
 
-    # test "create_chat/1 with invalid data returns error changeset" do
-    #   assert {:error, %Ecto.Changeset{}} = Chats.create_chat(@invalid_attrs)
-    # end
+    test "create_chat/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Chats.create_chat(@invalid_attrs)
+    end
 
-    # test "update_chat/2 with valid data updates the chat" do
-    #   chat = chat_fixture()
-    #   assert {:ok, %Chat{} = chat} = Chats.update_chat(chat, @update_attrs)
-    #   assert chat.date == 43
-    #   assert chat.text == "some updated text"
-    # end
+    test "update_chat/2 with valid data updates the chat" do
+      chat = chat_fixture()
+      assert {:ok, %Chat{} = chat} = Chats.update_chat(chat, @update_attrs)
+      assert chat.date == 43
+      assert chat.text == "some updated text"
+    end
 
     # test "update_chat/2 with invalid data returns error changeset" do
     #   chat = chat_fixture()

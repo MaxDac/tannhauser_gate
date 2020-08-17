@@ -5,7 +5,6 @@ defmodule TannhauserGate.Chats.Chat do
   alias TannhauserGate.ChatRooms.ChatRoom
 
   schema "chat" do
-    field :date, :integer
     field :text, :string
 
     belongs_to :character, Character

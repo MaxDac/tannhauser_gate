@@ -4,7 +4,6 @@ defmodule TannhauserGate.Chats do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.DateTime
   alias TannhauserGate.Repo
 
   alias TannhauserGate.Chats.Chat
