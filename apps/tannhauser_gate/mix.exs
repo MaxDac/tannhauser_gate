@@ -39,7 +39,8 @@ defmodule TannhauserGate.MixProject do
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.0"},
-      {:pbkdf2_elixir, "~> 1.2"}
+      {:pbkdf2_elixir, "~> 1.2"},
+      {:macro_tests, git: "https://github.com/MaxDac/ElixirMonadMacro.git"} #, tag: "0.1.0"}
     ]
   end
 

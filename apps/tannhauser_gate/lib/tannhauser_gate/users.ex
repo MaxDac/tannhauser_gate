@@ -37,11 +37,17 @@ defmodule TannhauserGate.Users do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  @doc """
+  Creates a query that get a user by its username.
+  """
   defp user_by_name_query(name) do
     from u in User,
     where: u.username == ^name
   end
 
+  @doc """
+  Gets a user by its name.
+  """
   @spec get_user_by_name(String.t()) :: User
   def get_user_by_name(name) do
     Repo.one(user_by_name_query name)
@@ -126,6 +132,10 @@ defmodule TannhauserGate.Users do
     User.registration_changeset(user, %{})
   end
 
+  @doc """
+  Performs the authentication of a user.
+  The email and the password must be provided in order to login.
+  """
   def authenticate(email, password) do
     user = get_user_by_email email
 

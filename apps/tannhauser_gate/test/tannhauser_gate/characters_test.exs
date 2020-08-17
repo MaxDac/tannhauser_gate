@@ -1,19 +1,24 @@
 defmodule TannhauserGate.CharactersTest do
   use TannhauserGate.DataCase
 
+  alias TannhauserGate.Users
   alias TannhauserGate.Characters
+  alias TannhauserGate.Repo
 
   describe "characters" do
     alias TannhauserGate.Characters.Character
 
+    @valid_user_attrs %{email: "some email", form_password: "some password", username: "some username"}
     @valid_attrs %{avatar: "some avatar", description: "some description", name: "some name", notes: "some notes"}
     @update_attrs %{avatar: "some updated avatar", description: "some updated description", name: "some updated name", notes: "some updated notes"}
-    @invalid_attrs %{avatar: nil, description: nil, name: nil, notes: nil}
+    @invalid_attrs %{name: nil}
 
     def character_fixture(attrs \\ %{}) do
+      {:ok, user} = Users.create_user(@valid_user_attrs)
+
       {:ok, character} =
         attrs
-        |> Enum.into(@valid_attrs)
+        |> Enum.into()
         |> Characters.create_character()
 
       character
@@ -21,12 +26,21 @@ defmodule TannhauserGate.CharactersTest do
 
     test "list_characters/0 returns all characters" do
       character = character_fixture()
-      assert Characters.list_characters() == [character]
+      [found] = Characters.list_characters()
+      assert(found.id == character.id)
+      assert(found.user_id == character.user_id)
+      assert(found.name == character.name)
     end
 
     test "get_character!/1 returns the character with given id" do
       character = character_fixture()
-      assert Characters.get_character!(character.id) == character
+      assert %{Characters.get_character!(character.id) | user: nil} == %{character | user: nil}
+    end
+
+    test "get_character/1 returns the character with given id" do
+      character = character_fixture()
+      {:ok, found} = Characters.get_character(character.id)
+      assert %{found | user: nil} == %{character | user: nil}
     end
 
     test "create_character/1 with valid data creates a character" do
@@ -46,14 +60,7 @@ defmodule TannhauserGate.CharactersTest do
       assert {:ok, %Character{} = character} = Characters.update_character(character, @update_attrs)
       assert character.avatar == "some updated avatar"
       assert character.description == "some updated description"
-      assert character.name == "some updated name"
       assert character.notes == "some updated notes"
-    end
-
-    test "update_character/2 with invalid data returns error changeset" do
-      character = character_fixture()
-      assert {:error, %Ecto.Changeset{}} = Characters.update_character(character, @invalid_attrs)
-      assert character == Characters.get_character!(character.id)
     end
 
     test "delete_character/1 deletes the character" do
