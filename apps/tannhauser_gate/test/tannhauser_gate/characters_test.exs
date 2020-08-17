@@ -13,12 +13,16 @@ defmodule TannhauserGate.CharactersTest do
     @update_attrs %{avatar: "some updated avatar", description: "some updated description", name: "some updated name", notes: "some updated notes"}
     @invalid_attrs %{name: nil}
 
-    def character_fixture(attrs \\ %{}) do
+    def user_id() do
       {:ok, user} = Users.create_user(@valid_user_attrs)
+      user.id
+    end
 
+    def character_fixture(attrs \\ %{}) do
       {:ok, character} =
         attrs
-        |> Enum.into()
+        |> Enum.into(@valid_attrs)
+        |> Map.put(:user_id, user_id())
         |> Characters.create_character()
 
       character
@@ -72,6 +76,20 @@ defmodule TannhauserGate.CharactersTest do
     test "change_character/1 returns a character changeset" do
       character = character_fixture()
       assert %Ecto.Changeset{} = Characters.change_character(character)
+    end
+
+    test "list_characters_by_user/1 correctly returns the user character" do
+      user_id = user_id()
+
+      {:ok, character} =
+        @valid_attrs
+        |> Map.put(:user_id, user_id)
+        |> Characters.create_character()
+
+      [first | _] = Characters.list_characters_by_user(user_id)
+      assert first.user_id == user_id
+      assert first.name == character.name
+      assert first.id == character.id
     end
   end
 end

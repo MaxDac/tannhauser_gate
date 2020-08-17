@@ -13,6 +13,14 @@ defmodule TannhauserGate.Chats.Chat do
     timestamps()
   end
 
+  def update_changeset(chat, attrs) do
+    chat
+    |> cast(attrs, [:text])
+    |> validate_required([:text, :character_id, :chat_rooms_id])
+    |> assoc_constraint(:character)
+    |> assoc_constraint(:chat_rooms)
+  end
+
   @doc false
   def changeset(chat, attrs) do
     chat

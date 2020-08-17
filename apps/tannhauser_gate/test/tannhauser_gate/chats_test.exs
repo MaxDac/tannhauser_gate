@@ -38,6 +38,7 @@ defmodule TannhauserGate.ChatsTest do
         |> ChatRooms.create_chat_room()
 
       %{
+        user_id: user_id,
         character_id: character_id,
         chat_rooms_id: chat_rooms_id
       }
@@ -117,25 +118,64 @@ defmodule TannhauserGate.ChatsTest do
     test "update_chat/2 with valid data updates the chat" do
       chat = chat_fixture()
       assert {:ok, %Chat{} = chat} = Chats.update_chat(chat, @update_attrs)
-      assert chat.date == 43
       assert chat.text == "some updated text"
     end
 
-    # test "update_chat/2 with invalid data returns error changeset" do
-    #   chat = chat_fixture()
-    #   assert {:error, %Ecto.Changeset{}} = Chats.update_chat(chat, @invalid_attrs)
-    #   assert chat == Chats.get_chat!(chat.id)
-    # end
+    test "update_chat/2 with invalid data returns error changeset" do
+      chat = chat_fixture()
+      assert {:error, %Ecto.Changeset{}} = Chats.update_chat(chat, @invalid_attrs)
+      assert %{chat | character: nil} == %{Chats.get_chat!(chat.id) | character: nil}
+    end
 
-    # test "delete_chat/1 deletes the chat" do
-    #   chat = chat_fixture()
-    #   assert {:ok, %Chat{}} = Chats.delete_chat(chat)
-    #   assert_raise Ecto.NoResultsError, fn -> Chats.get_chat!(chat.id) end
-    # end
+    test "delete_chat/1 deletes the chat" do
+      chat = chat_fixture()
+      assert {:ok, %Chat{}} = Chats.delete_chat(chat)
+      assert_raise Ecto.NoResultsError, fn -> Chats.get_chat!(chat.id) end
+    end
 
-    # test "change_chat/1 returns a chat changeset" do
-    #   chat = chat_fixture()
-    #   assert %Ecto.Changeset{} = Chats.change_chat(chat)
-    # end
+    test "change_chat/1 returns a chat changeset" do
+      chat = chat_fixture()
+      assert %Ecto.Changeset{} = Chats.change_chat(chat)
+    end
+
+    test "create_chat_with_character_id/1 creates a chat with a character id" do
+      %{
+        character_id: character_id,
+        chat_rooms_id: chat_rooms_id
+      } = chat_deps_fixture
+
+      attrs =
+        attrs = %{
+          "text" => "some text",
+          "character_id" => character_id,
+          "chat_rooms_id" => chat_rooms_id
+        }
+
+      chat = Chats.create_chat_with_character_id(attrs)
+
+      assert chat.text == "some text"
+      assert chat.character_id == character_id
+      assert chat.chat_rooms_id == chat_rooms_id
+    end
+
+    test "create_chat_with_character_id/1 creates a chat with a user id" do
+      %{
+        user_id: user_id,
+        chat_rooms_id: chat_rooms_id
+      } = chat_deps_fixture
+
+      attrs = %{
+        "text" => "some text",
+        "user_id" => user_id,
+        "chat_rooms_id" => chat_rooms_id
+      }
+
+      chat = Chats.create_chat_with_character_id(attrs)
+      assert chat.text == "some text"
+      assert chat.chat_rooms_id == chat_rooms_id
+
+      [character | _] = Characters.list_characters_by_user(user_id)
+      assert character.id == chat.character_id
+    end
   end
 end

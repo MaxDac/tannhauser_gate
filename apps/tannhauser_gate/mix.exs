@@ -40,7 +40,7 @@ defmodule TannhauserGate.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.0"},
       {:pbkdf2_elixir, "~> 1.2"},
-      {:macro_tests, git: "https://github.com/MaxDac/ElixirMonadMacro.git"} #, tag: "0.1.0"}
+      {:ok_error_pipe_macro, git: "https://github.com/MaxDac/OkErrorMacro.git"} #, tag: "0.1.0"}
     ]
   end
 

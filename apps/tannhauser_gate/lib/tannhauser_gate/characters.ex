@@ -49,7 +49,7 @@ defmodule TannhauserGate.Characters do
 
   """
   def get_character(id) do
-    use MonadMacro
+    use OkErrorPipe
 
     case Repo.get(Character, id) do
       nil -> {:error, :not_found}
