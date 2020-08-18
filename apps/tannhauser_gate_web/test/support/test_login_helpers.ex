@@ -1,6 +1,4 @@
 defmodule TannhauserGateWeb.TestLoginHelpers do
-  import Plug.Conn
-
   alias TannhauserGateWeb.Router.Helpers, as: Routes
   alias TannhauserGate.Users
 

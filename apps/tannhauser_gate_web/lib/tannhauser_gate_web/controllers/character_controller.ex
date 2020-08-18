@@ -4,6 +4,8 @@ defmodule TannhauserGateWeb.CharacterController do
   alias TannhauserGate.Characters
   alias TannhauserGate.Characters.Character
 
+  alias TannhauserGate.Users
+
   action_fallback TannhauserGateWeb.FallbackController
 
   def index(conn, _params) do
@@ -28,6 +30,18 @@ defmodule TannhauserGateWeb.CharacterController do
   def show(conn, %{"id" => id}) do
     character = Characters.get_character!(id)
     render(conn, "show.json", character: character)
+  end
+
+  def show_user(conn, %{"id" => id}) do
+    IO.puts "passing"
+    try do
+      user = Users.get_user!(id)
+      render(conn, "show.json", user: user)
+    rescue
+      ex ->
+        IO.inspect ex
+        raise ex
+    end
   end
 
   def check_authorized(%Plug.Conn{

@@ -9,6 +9,7 @@ defmodule TannhauserGateWeb.PlugHelpers do
   @spec put_error_response(Plug.Conn.t(), String.t()) :: Plug.Conn.t()
   def put_error_response(conn, reason) do
     conn
+    |> put_status(:unauthorized)
     |> put_view(TannhauserGateWeb.ErrorView)
     |> render("error.json", error: reason)
     |> halt()
