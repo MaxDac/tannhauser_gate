@@ -2,11 +2,11 @@ defmodule TannhauserGateWeb.ChatChannel do
   use TannhauserGateWeb, :channel
 
   alias TannhauserGate.Chats
-  alias TannhauserGate.Chats.Chat
+  # alias TannhauserGate.Chats.Chat
 
-  @spec map_chat(Chat.t()) :: %{}
-  defp map_chat(c), do:
-    %{ "id" => c.id, "text" => c.text, "date" => c.inserted_at, "character_name" => c.character }
+  # @spec map_chat(Chat.t()) :: %{}
+  # defp map_chat(c), do:
+  #   %{ "id" => c.id, "text" => c.text, "date" => c.inserted_at, "character_name" => c.character }
 
   def join("chats:" <> chat_room_id, _params, socket) do
     IO.puts "Joining"

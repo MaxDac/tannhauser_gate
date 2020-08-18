@@ -37,9 +37,6 @@ defmodule TannhauserGate.Users do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
-  @doc """
-  Creates a query that get a user by its username.
-  """
   defp user_by_name_query(name) do
     from u in User,
     where: u.username == ^name
@@ -60,7 +57,7 @@ defmodule TannhauserGate.Users do
     |> Repo.exists?
   end
 
-  @spec get_user_by_email(String.t()) :: User
+  @spec get_user_by_email(String.t()) :: User | nil
   def get_user_by_email(email) do
     query = from u in User, where: u.email == ^email
     Repo.one(query)
