@@ -39,7 +39,8 @@ defmodule TannhauserGate.MixProject do
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.0"},
-      {:pbkdf2_elixir, "~> 1.2"}
+      {:pbkdf2_elixir, "~> 1.2"},
+      {:ok_error_pipe_macro, git: "https://github.com/MaxDac/OkErrorMacro.git"} #, tag: "0.1.0"}
     ]
   end
 

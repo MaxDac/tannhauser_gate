@@ -4,7 +4,6 @@ defmodule TannhauserGate.Chats do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.DateTime
   alias TannhauserGate.Repo
 
   alias TannhauserGate.Chats.Chat
@@ -39,6 +38,11 @@ defmodule TannhauserGate.Chats do
 
   """
   def get_chat!(id), do: Repo.get!(Chat, id) |> Repo.preload(:character)
+
+  def get_chat_with_room!(id), do:
+    Repo.get!(Chat, id)
+    |> Repo.preload(:character)
+    |> Repo.preload(:chat_rooms)
 
   defp nested_character_query(), do:
     from c in Character, select: %{ id: c.id, name: c.name }
@@ -75,17 +79,26 @@ defmodule TannhauserGate.Chats do
     |> Repo.insert()
   end
 
-  def create_chat_with_user_id(%{
-    "user_id" => user_id,
-    "character_id" => character_id} = attrs) when character_id != "" do
-    {:ok, %Chat{id: id}} = create_chat(attrs |> Map.put("character_id", character_id))
+  def create_chat_with_character_id(%{"character_id" => character_id} = attrs) when character_id != "" do
+    {:ok, %Chat{id: id}} = create_chat(attrs)
     get_chat!(id)
   end
 
-  def create_chat_with_user_id(%{"user_id" => user_id} = attrs) do
+  def create_chat_with_character_id(%{"user_id" => user_id} = attrs) do
     [character | _] = Characters.list_characters_by_user(user_id)
     {:ok, %Chat{id: id}} = create_chat(attrs |> Map.put("character_id", character.id))
     get_chat!(id)
+  end
+
+  def update_chat(%Chat{} = chat, attrs) do
+    chat
+    |> Chat.update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_chat(%Chat{} = chat) do
+    chat
+    |> Repo.delete()
   end
 
   @doc """

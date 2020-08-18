@@ -23,4 +23,10 @@ defmodule TannhauserGateWeb.UserView do
   def render("logout.json", %{}) do
     %{}
   end
+
+  def render("error.json", %{error: error}) do
+    %{
+      errors: [error]
+    }
+  end
 end

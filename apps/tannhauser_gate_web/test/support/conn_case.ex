@@ -22,6 +22,7 @@ defmodule TannhauserGateWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       alias TannhauserGateWeb.Router.Helpers, as: Routes
+      import TannhauserGateWeb.TestLoginHelpers
 
       # The default endpoint for testing
       @endpoint TannhauserGateWeb.Endpoint

@@ -4,7 +4,7 @@ defmodule TannhauserGateWeb.UserController do
   alias TannhauserGate.Users
   alias TannhauserGate.Users.User
 
-  import Plug.Conn
+  import TannhauserGateWeb.Helpers
 
   action_fallback TannhauserGateWeb.FallbackController
 
@@ -15,18 +15,11 @@ defmodule TannhauserGateWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    case Users.create_user(user_params) do
-      {:ok, %User{} = user} ->
-        conn
-        |> put_status(:created)
-        |> put_resp_header("location", Routes.user_path(conn, :show, user))
-        |> render("show.json", user: user)
-      {:error, reason} ->
-        IO.puts "Error while registering user #{inspect reason}"
-
-        conn
-        |> put_view(ErrorView)
-        |> render("error.json", error: reason)
+    with {:ok, %User{} = user} <- Users.create_user(user_params) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", Routes.user_path(conn, :show, user))
+      |> render("show.json", user: user)
     end
   end
 
@@ -38,16 +31,26 @@ defmodule TannhauserGateWeb.UserController do
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Users.get_user!(id)
 
-    with {:ok, %User{} = user} <- Users.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+    cond do
+      is_current_user(conn, id) ->
+        IO.puts "is updating"
+        with {:ok, %User{} = user} <- Users.update_user(user, user_params) do
+          render(conn, "show.json", user: user)
+        end
+      true ->
+        {:error, :not_authorized}
     end
   end
 
   def delete(conn, %{"id" => id}) do
     user = Users.get_user!(id)
 
-    with {:ok, %User{}} <- Users.delete_user(user) do
-      send_resp(conn, :no_content, "")
+    if is_current_user(conn, id) do
+      with {:ok, %User{}} <- Users.delete_user(user) do
+        send_resp(conn, :no_content, "")
+      end
+    else
+        {:error, :not_authorized}
     end
   end
 end

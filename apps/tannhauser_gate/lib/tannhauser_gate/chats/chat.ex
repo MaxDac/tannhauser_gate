@@ -5,13 +5,20 @@ defmodule TannhauserGate.Chats.Chat do
   alias TannhauserGate.ChatRooms.ChatRoom
 
   schema "chat" do
-    field :date, :integer
     field :text, :string
 
     belongs_to :character, Character
     belongs_to :chat_rooms, ChatRoom
 
     timestamps()
+  end
+
+  def update_changeset(chat, attrs) do
+    chat
+    |> cast(attrs, [:text])
+    |> validate_required([:text, :character_id, :chat_rooms_id])
+    |> assoc_constraint(:character)
+    |> assoc_constraint(:chat_rooms)
   end
 
   @doc false
