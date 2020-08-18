@@ -21,6 +21,13 @@ defmodule TannhauserGate.Users.User do
     end
   end
 
+  def update_changeset(user, params) do
+    user
+    |> changeset(params)
+    |> cast(params, [:email])
+    |> validate_required([:email])
+  end
+
   def registration_changeset(user, params) do
     user
     |> changeset(params)

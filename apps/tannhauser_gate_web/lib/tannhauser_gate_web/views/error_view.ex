@@ -14,6 +14,12 @@ defmodule TannhauserGateWeb.ErrorView do
     Phoenix.Controller.status_message_from_template(template)
   end
 
+  def render("unauthorized.json", %{}) do
+    %{
+      errors: ["user not authorized"]
+    }
+  end
+
   def render("error.json", %{error: error}) do
     %{
       errors: [error]

@@ -15,4 +15,9 @@ defmodule TannhauserGateWeb.Helpers do
         {:error, inspect e}
     end
   end
+
+  @spec is_current_user(%Plug.Conn{}, any()) :: boolean()
+  def is_current_user(%Plug.Conn{
+    assigns: assigns
+  }, id), do: to_string(assigns[:user_id]) == to_string(id)
 end

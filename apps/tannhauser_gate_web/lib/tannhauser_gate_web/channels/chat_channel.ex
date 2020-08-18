@@ -31,7 +31,7 @@ defmodule TannhauserGateWeb.ChatChannel do
     chat_log =
       attrs
       |> Map.put("user_id", user_id)
-      |> Chats.create_chat_with_user_id()
+      |> Chats.create_chat_with_character_id()
 
     broadcast!(socket, "new_chat_log",
       %{

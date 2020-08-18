@@ -98,7 +98,7 @@ defmodule TannhauserGate.Users do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> User.registration_changeset(attrs)
+    |> User.update_changeset(attrs)
     |> Repo.update()
 
   end
@@ -141,7 +141,7 @@ defmodule TannhauserGate.Users do
 
     cond do
       user && Pbkdf2.verify_pass(password, user.password) ->
-        {:ok, user}
+        {:ok, %{user | password: nil}}
 
       user ->
         {:error, :unauthorized}
