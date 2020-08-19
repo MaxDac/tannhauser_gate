@@ -23,6 +23,12 @@ defmodule TannhauserGateWeb.Router do
     plug TannhauserGateWeb.AuthorizationPlug
   end
 
+  pipeline :admin_api do
+    plug :accepts, ["json"]
+    plug TannhauserGateWeb.AuthorizationPlug
+    plug TannhauserGateWeb.AdminCheckPlug
+  end
+
   scope "/", TannhauserGateWeb do
     pipe_through :browser
 
@@ -49,5 +55,11 @@ defmodule TannhauserGateWeb.Router do
     get "/rooms/:id", ChatController, :get_chat_room
     get "/chat/logs/:room_id", ChatController, :get_chat_logs_by_room
     post "/chat/token", AuthenticationController, :request_chat_token
+  end
+
+  scope "/api/admin", TannhauserGateWeb do
+    pipe_through :admin_api
+
+    post "/user/:id", UserController, :toggle_admin
   end
 end

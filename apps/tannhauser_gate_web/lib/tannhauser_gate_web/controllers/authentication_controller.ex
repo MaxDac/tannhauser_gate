@@ -67,7 +67,7 @@ defmodule TannhauserGateWeb.AuthenticationController do
         user = Users.get_user_by_name(username)
         conn |> render("user.json", user: user)
 
-      {:error, reason} ->
+      {:error, _} ->
         conn
         |> put_view(ErrorView)
         |> render("error.json", error: "User unauthorized")

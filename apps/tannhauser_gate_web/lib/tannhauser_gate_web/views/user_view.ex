@@ -13,7 +13,8 @@ defmodule TannhauserGateWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       username: user.username,
-      email: user.email}
+      email: user.email,
+      admin: user.admin}
   end
 
   def render("token.json", %{token: token}) do

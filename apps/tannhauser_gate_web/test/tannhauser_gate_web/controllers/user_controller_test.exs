@@ -141,6 +141,25 @@ defmodule TannhauserGateWeb.UserControllerTest do
     end
   end
 
+  describe "toggle user admin" do
+    setup [:create_user]
+
+    test "admin can toggle admin", %{conn: conn, user: user} do
+      {:ok, admin_user} = Users.create_user(@other_user)
+      admin_user = Users.toggle_admin(admin_user)
+
+      conn
+      |> perform_test_login(&post/3, admin_user)
+      |> post("/api/admin/user/#{admin_user.id}")
+
+      assert response(conn, 200)
+
+      updated_user = Users.get_user!(user.id)
+
+      assert user.admin
+    end
+  end
+
   defp create_user(_) do
     user = fixture(:user)
     {:ok, user: user}

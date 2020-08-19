@@ -69,5 +69,23 @@ defmodule TannhauserGate.UsersTest do
       user = user_fixture()
       assert %Ecto.Changeset{} = Users.change_user(user)
     end
+
+    test "toggle_admin/1 make admin a non admin" do
+      user = user_fixture()
+      user = Users.toggle_admin(user)
+
+      assert user.admin
+    end
+
+    test "toggle_admin/1 make an admin a non admin" do
+      user = user_fixture()
+      user = Users.toggle_admin(user)
+
+      assert user.admin
+
+      user = Users.toggle_admin(user)
+
+      assert user.admin == false
+    end
   end
 end

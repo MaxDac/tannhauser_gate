@@ -53,4 +53,11 @@ defmodule TannhauserGateWeb.UserController do
         {:error, :not_authorized}
     end
   end
+
+  def toggle_admin(conn, %{"id" => id}) do
+    with user <- Users.get_user!(id) do
+      Users.toggle_admin(user)
+      send_resp(conn, :no_content, "")
+    end
+  end
 end

@@ -7,6 +7,7 @@ defmodule TannhauserGate.Users.User do
     field :form_password, :string, virtual: true
     field :password, :string
     field :username, :string
+    field :admin, :boolean
 
     timestamps()
   end
@@ -33,8 +34,14 @@ defmodule TannhauserGate.Users.User do
     |> changeset(params)
     |> cast(params, [:form_password])
     |> validate_required([:form_password])
-    |> validate_length(:form_password, min: 6, max: 100)
+    |> validate_length(:form_password, min: 6, max: 20)
     |> put_pass_hash()
+  end
+
+  def elevation_changeset(user, params) do
+    user
+    |> changeset(params)
+    |> cast(params, [:admin])
   end
 
   @doc false

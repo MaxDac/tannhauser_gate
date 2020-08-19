@@ -149,4 +149,14 @@ defmodule TannhauserGate.Users do
     end
   end
 
+  def toggle_admin(%User{} = user) do
+    with user <- get_user!(user.id) do
+      user
+      |> User.elevation_changeset(%{
+        admin: (! user.admin)
+      })
+      |> Repo.update!()
+    end
+  end
+
 end
